@@ -346,58 +346,66 @@ class _ProductGallery extends StatelessWidget {
                       height: 72,
                       duration: duration,
                       curve: Curves.easeOutCubic,
+                      padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
+                        color: colors.surface,
                         borderRadius: BorderRadius.circular(18),
                         border: Border.all(
                           color: index == selectedIndex
                               ? colors.primary
                               : colors.outlineVariant,
-                          width: index == selectedIndex ? 2.5 : 1,
+                          width: index == selectedIndex ? 1.5 : 1,
                         ),
                         boxShadow: index == selectedIndex
                             ? [
                                 BoxShadow(
-                                  color: colors.primary.withValues(alpha: .18),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
+                                  color: colors.primary.withValues(alpha: .12),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
                                 ),
                               ]
                             : const [],
                       ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Material(
-                        color: colors.surfaceContainerLowest,
-                        child: InkWell(
-                          onTap: () => onThumbnailPressed(index),
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              ExcludeSemantics(
-                                child: _GalleryImage(
-                                  url: imageUrls[index],
-                                  semanticLabel: '',
-                                  fallbackIcon: fallbackIcon,
-                                  fallbackColor: fallbackColor,
-                                ),
-                              ),
-                              if (index == selectedIndex)
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    margin: const EdgeInsets.all(6),
-                                    padding: const EdgeInsets.all(3),
-                                    decoration: BoxDecoration(
-                                      color: colors.primary,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.check_rounded,
-                                      size: 14,
-                                      color: colors.onPrimary,
-                                    ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Material(
+                          color: colors.surfaceContainerLowest,
+                          child: InkWell(
+                            onTap: () => onThumbnailPressed(index),
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                ExcludeSemantics(
+                                  child: _GalleryImage(
+                                    url: imageUrls[index],
+                                    semanticLabel: '',
+                                    fallbackIcon: fallbackIcon,
+                                    fallbackColor: fallbackColor,
                                   ),
                                 ),
-                            ],
+                                if (index == selectedIndex)
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Container(
+                                      margin: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                        color: colors.primary,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: colors.surface,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.check_rounded,
+                                        size: 13,
+                                        color: colors.onPrimary,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
