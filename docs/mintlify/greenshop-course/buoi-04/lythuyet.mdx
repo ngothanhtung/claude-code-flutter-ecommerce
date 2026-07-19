@@ -1,0 +1,117 @@
+---
+title: "Buổi 04 — Lý thuyết: Trang chủ & Danh sách sản phẩm"
+description: "Ghép các khối thành trang chủ hoàn chỉnh, hiểu khái niệm dữ liệu và danh sách sản phẩm."
+---
+
+# Buổi 04 — Lý thuyết: Trang Chủ & Dữ Liệu Sản Phẩm
+
+## Mục tiêu buổi học
+
+- Hiểu cách ghép nhiều khối thành một trang chủ hoàn chỉnh
+- Nắm khái niệm **dữ liệu** ở mức Vibe Coder: sản phẩm là một "tấm thẻ thông tin"
+- Biết dùng **bảng tính (Excel/Google Sheets)** làm cầu nối tư duy dữ liệu
+- Hiểu vì sao dùng **dữ liệu mẫu** trước khi có dữ liệu thật
+
+---
+
+## 1. Trang chủ — "bộ mặt" của cửa hàng
+
+Trang chủ là màn hình đầu tiên khách nhìn thấy khi mở app. Nó quyết định ấn tượng đầu — giống như mặt tiền cửa hàng. Một trang chủ eCommerce tốt thường có các khối xếp từ trên xuống:
+
+```text
+┌─────────────────────────────┐
+│  🔍 Tìm kiếm      🧺 Giỏ    │  ← Thanh trên cùng
+├─────────────────────────────┤
+│  [  Banner khuyến mãi  ]    │  ← Ảnh cuộn ngang
+├─────────────────────────────┤
+│  🥬  🥕  🍎  🌿  🍄  📦     │  ← Danh mục cuộn ngang
+├─────────────────────────────┤
+│  Sản phẩm nổi bật           │
+│  ┌────┐  ┌────┐             │
+│  │rau │  │củ  │             │  ← Lưới sản phẩm
+│  └────┘  └────┘             │
+│  ┌────┐  ┌────┐             │
+│  │quả │  │nấm │             │
+│  └────┘  └────┘             │
+└─────────────────────────────┘
+```
+
+Bạn đã dựng riêng từng khối ở buổi 3. Buổi này là **ghép chúng lại và thêm lưới sản phẩm**.
+
+## 2. Dữ liệu là gì? — Hiểu ở mức Vibe Coder
+
+Bạn không cần hiểu "cơ sở dữ liệu" theo nghĩa kỹ thuật. Chỉ cần hình dung: mỗi sản phẩm là một **tấm thẻ thông tin** với các ô cần điền.
+
+Một sản phẩm rau củ gồm những ô sau:
+
+| Ô thông tin | Ví dụ |
+|---|---|
+| Tên | Cà rốt Đà Lạt |
+| Giá | 18.000đ |
+| Giá gốc (để hiện giảm giá) | 22.000đ |
+| Ảnh | (đường dẫn ảnh) |
+| Mô tả | Cà rốt tươi, ngọt, giàu vitamin A |
+| Danh mục | Củ quả |
+| Còn hàng | Có / Không |
+| Nổi bật | Có / Không |
+
+<Note>
+Khi có nhiều sản phẩm, ta có một **danh sách các tấm thẻ**. App sẽ đọc danh sách này và hiển thị thành lưới. Đó là tất cả những gì bạn cần hiểu về "dữ liệu" lúc này.
+</Note>
+
+## 3. Bảng tính — người bạn quen thuộc làm cầu nối
+
+Điều tuyệt vời: bạn đã biết cách quản lý "danh sách các tấm thẻ" rồi — đó chính là **bảng tính Excel/Google Sheets**! Mỗi dòng là một sản phẩm, mỗi cột là một ô thông tin.
+
+| Tên | Giá | Giá gốc | Danh mục | Còn hàng | Nổi bật |
+|---|---|---|---|---|---|
+| Rau muống | 12000 | 15000 | Rau ăn lá | Có | Có |
+| Cà rốt | 18000 | 22000 | Củ quả | Có | Không |
+| Táo Mỹ | 65000 | 70000 | Trái cây | Có | Có |
+
+Bạn soạn bảng này (kỹ năng bạn đã có), rồi đưa cho AI:
+
+```text
+Đây là danh sách sản phẩm của tôi (dán bảng vào). Đưa vào app làm dữ liệu
+mẫu và hiển thị lên lưới sản phẩm ở trang chủ.
+```
+
+<Tip>
+Đây là mạch xuyên suốt: hôm nay bạn dùng bảng tính làm **dữ liệu mẫu**. Đến buổi 8, cùng bảng tư duy đó sẽ được nâng cấp lên **Firebase** — kho dữ liệu thật trên mây.
+</Tip>
+
+## 4. Vì sao dùng "dữ liệu mẫu" trước?
+
+Bạn có thể thắc mắc: sao không dùng dữ liệu thật luôn? Vì:
+
+1. **Nhanh** — không cần thiết lập kho dữ liệu phức tạp ngay, tập trung làm giao diện đẹp trước.
+2. **An toàn** — thử nghiệm thoải mái mà không sợ ảnh hưởng dữ liệu thật.
+3. **Dễ học** — hiểu giao diện trước, hiểu dữ liệu sau, từng bước một.
+
+Dữ liệu mẫu là "hàng trưng bày tạm" để bạn dựng và trang trí cửa hàng. Khi cửa hàng đẹp rồi, ta thay bằng hàng thật (buổi 8).
+
+## 5. Định dạng hiển thị — những chi tiết nhỏ tạo sự chuyên nghiệp
+
+Vài điều nhỏ nhưng khiến app trông "thật" hơn hẳn:
+
+- **Giá tiền:** hiện `25.000đ` (có dấu chấm), không phải `25000`.
+- **Giảm giá:** hiện giá gốc gạch ngang + nhãn "-20%".
+- **Tên dài:** giới hạn 2 dòng, dài quá thì "...".
+- **Hết hàng:** làm mờ và hiện nhãn "Hết hàng".
+
+Bạn chỉ cần yêu cầu, ví dụ:
+
+```text
+Giá tiền hiển thị có dấu chấm ngăn cách hàng nghìn. Sản phẩm nào có giá gốc
+cao hơn giá bán thì hiện giá gốc gạch ngang và nhãn phần trăm giảm màu đỏ.
+```
+
+---
+
+## Tóm tắt buổi học
+
+- Trang chủ = ghép các khối (thanh tìm kiếm, banner, danh mục, lưới sản phẩm).
+- Sản phẩm = một **tấm thẻ thông tin** với các ô: tên, giá, ảnh, danh mục...
+- Dùng **bảng tính** để soạn danh sách sản phẩm — kỹ năng bạn đã có.
+- Dùng **dữ liệu mẫu** trước (nhanh, an toàn, dễ học); buổi 8 lên dữ liệu thật.
+- Chăm chút **định dạng hiển thị** (giá có dấu chấm, giảm giá, hết hàng) để app chuyên nghiệp.

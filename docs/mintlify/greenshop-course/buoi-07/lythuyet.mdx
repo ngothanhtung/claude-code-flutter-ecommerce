@@ -1,0 +1,112 @@
+---
+title: "Buổi 07 — Lý thuyết: Giỏ hàng & Quy tắc nghiệp vụ"
+description: "Hiểu khái niệm trạng thái (trí nhớ của app) và cách viết quy tắc nghiệp vụ cho AI."
+---
+
+# Buổi 07 — Lý thuyết: Giỏ Hàng & Quy Tắc Bán Hàng
+
+## Mục tiêu buổi học
+
+- Hiểu khái niệm **trạng thái** (state) qua ẩn dụ "trí nhớ dùng chung của app"
+- Biết một giỏ hàng hoàn chỉnh cần làm được gì
+- Học cách viết **quy tắc nghiệp vụ** (giảm giá, phí ship) rõ ràng cho AI
+- Biết dùng thói quen vàng: **bắt AI tự săn lỗi**
+
+---
+
+## 1. Giỏ hàng — trái tim của app bán hàng
+
+Mọi tính năng trước đó (trang chủ, tìm kiếm, chi tiết) đều dẫn tới một mục tiêu: **khách bỏ hàng vào giỏ và mua**. Giỏ hàng là nơi tổng hợp mọi thứ khách chọn và tính ra số tiền phải trả. Làm tốt giỏ hàng = tăng doanh thu.
+
+## 2. Khái niệm "trạng thái" — trí nhớ dùng chung của app
+
+Đây là khái niệm kỹ thuật quan trọng nhất khóa học, nhưng ta hiểu nó **không cần thuật ngữ**.
+
+Hãy tưởng tượng giỏ hàng như một **cuốn sổ chung** mà mọi màn hình đều đọc được:
+
+- Ở trang chi tiết, khách bấm "Thêm vào giỏ" → ghi vào sổ
+- Chấm đỏ trên icon giỏ (ở mọi màn hình) → đọc sổ và hiện số
+- Tab Giỏ hàng → đọc sổ và hiện danh sách
+
+```text
+        ┌──────────────────┐
+        │   SỔ GIỎ HÀNG    │  ← "trí nhớ dùng chung"
+        │  - Rau muống x2   │
+        │  - Cà rốt x1      │
+        └────────┬─────────┘
+     đọc/ghi     │      đọc
+   ┌─────────────┼─────────────┐
+   ▼             ▼             ▼
+Chi tiết SP   Chấm đỏ icon   Tab Giỏ hàng
+```
+
+<Note>
+Bạn chỉ cần mô tả đúng **kỳ vọng hành vi** — "thêm ở màn này thì màn kia phải thấy ngay". AI tự chọn công cụ kỹ thuật phù hợp. Bạn không cần biết tên công cụ đó.
+</Note>
+
+## 3. Một giỏ hàng hoàn chỉnh làm được gì?
+
+| Chức năng | Mô tả |
+|---|---|
+| Thêm sản phẩm | Từ trang chi tiết, chọn số lượng rồi thêm |
+| Tăng/giảm số lượng | Nút - và + ngay trong giỏ |
+| Xóa sản phẩm | Vuốt trái hoặc nút xóa; hỏi xác nhận trước khi xóa |
+| Tính tiền | Tạm tính → giảm giá → phí ship → tổng cộng |
+| Mã giảm giá | Nhập mã, kiểm tra hợp lệ, áp dụng |
+| Giỏ trống | Hình minh họa + nút "Mua sắm ngay" |
+| Ghi nhớ | Đóng app mở lại, giỏ vẫn còn nguyên |
+
+## 4. Quy tắc nghiệp vụ — thế mạnh của người kinh doanh
+
+Đây là phần **bạn giỏi hơn AI**. Bạn hiểu việc bán rau: khi nào freeship, giảm giá thế nào, ưu đãi ra sao. Việc của bạn là **viết ra tường minh** như hướng dẫn cho một nhân viên mới.
+
+Ví dụ một bộ quy tắc rõ ràng:
+
+```text
+Quy tắc tính tiền của cửa hàng tôi:
+1. Phí ship: nội thành 15.000đ, ngoại thành/tỉnh khác 30.000đ
+2. Đơn từ 300.000đ: MIỄN phí ship
+3. Mã "GREEN10": giảm 10% tối đa 50.000đ, chỉ áp dụng đơn từ 200.000đ
+4. Mã sai hoặc chưa đủ điều kiện: báo lý do cụ thể ngay dưới ô nhập mã
+5. Mỗi đơn chỉ dùng 1 mã
+```
+
+<Tip>
+Bí quyết: viết quy tắc **cụ thể, có số, có điều kiện rõ**. Càng mơ hồ ("giảm giá cho đơn lớn") thì AI càng dễ làm sai ý. Càng rõ ("đơn từ 300.000đ miễn ship") thì càng chuẩn.
+</Tip>
+
+## 5. Quy tắc nghiệp vụ đặc thù ngành rau củ
+
+Rau củ có những đặc thù riêng bạn có thể tận dụng làm ưu đãi:
+
+- **Rau cận ngày:** giảm giá rau thu hoạch đã lâu để đẩy hàng, tránh hỏng
+- **Combo gia đình:** gói nhiều loại rau giá ưu đãi
+- **Mua rau tặng rau gia vị:** mua đủ tiền tặng hành, ngò
+- **Freeship theo khung giờ:** miễn ship khung giờ thấp điểm
+- **Đặt định kỳ:** đăng ký giao rau hằng tuần được giảm giá
+
+Đây là nơi bạn sáng tạo — mỗi cửa hàng một chiến lược riêng.
+
+## 6. Thói quen vàng: bắt AI tự săn lỗi
+
+Người mới thường không nghĩ ra hết các tình huống oái oăm. Giải pháp: **để AI nghĩ hộ, mình duyệt**.
+
+```text
+Với giỏ hàng vừa làm, liệt kê 10 tình huống oái oăm người dùng có thể gây ra
+(bấm + thật nhanh 20 lần, nhập mã giảm giá viết thường, xóa hết sản phẩm sau
+khi đã áp mã, để số lượng về 0...). Với mỗi tình huống cho biết app đang xử lý
+thế nào, cái nào chưa ổn thì sửa luôn.
+```
+
+Sau đó **tự tay bấm thử lại** từng tình huống. Đây chính là kỹ năng kiểm thử (QA) — cực kỳ giá trị.
+
+---
+
+## Tóm tắt buổi học
+
+- Giỏ hàng là **trái tim** của app bán hàng.
+- **Trạng thái** = "cuốn sổ chung" mọi màn hình đọc được; bạn chỉ cần mô tả kỳ vọng hành vi.
+- Giỏ hàng đủ: thêm/bớt/xóa, tính tiền, mã giảm giá, giỏ trống, ghi nhớ.
+- **Quy tắc nghiệp vụ** là thế mạnh của bạn — viết cụ thể, có số, có điều kiện.
+- Tận dụng đặc thù ngành rau (rau cận ngày, combo, đặt định kỳ).
+- Thói quen vàng: **bắt AI săn lỗi rồi tự bấm thử lại**.

@@ -1,0 +1,93 @@
+---
+title: "Buổi 05 — Thực hành: Dựng khung điều hướng 4 tab"
+description: "Vẽ sơ đồ màn hình và dựng khung điều hướng hoàn chỉnh cho GreenShop."
+---
+
+# Buổi 05 — Thực hành: Khung Điều Hướng GreenShop
+
+> Kết thúc buổi: app có 4 tab hoạt động, chuyển màn hình mượt, nút quay lại đúng, giữ được vị trí cuộn.
+
+## Lab 5.1 — Vẽ sơ đồ màn hình trên giấy (15 phút)
+
+Trước khi ra lệnh cho AI, hãy tự vẽ. Lấy giấy bút, vẽ các "phòng" và "cửa" của GreenShop:
+
+- Vẽ 4 ô tab: Trang chủ, Danh mục, Giỏ hàng, Tài khoản
+- Vẽ mũi tên: từ Trang chủ → Chi tiết sản phẩm
+- Vẽ mũi tên: từ Danh mục → Danh sách theo danh mục
+- Ghi chú chỗ nào có nút quay lại
+
+<Tip>
+Tờ giấy này chính là bản thiết kế. Giữ nó bên cạnh khi làm — bạn sẽ mô tả cho AI chính xác hơn nhiều.
+</Tip>
+
+## Lab 5.2 — Dựng khung 4 tab
+
+```text
+[BỐI CẢNH] App GreenShop, dựng khung điều hướng chính.
+[YÊU CẦU]  Thêm thanh 4 tab dưới đáy màn hình:
+           Trang chủ, Danh mục, Giỏ hàng, Tài khoản
+[CHI TIẾT] - Mỗi tab có icon và tên
+           - Tab đang chọn được tô màu xanh lá đậm
+           - Trang chủ dùng màn hình đã làm ở buổi 4
+           - 3 tab kia tạm để màn hình trống có tiêu đề
+           - Chuyển tab KHÔNG được mất vị trí đang cuộn
+[GIỚI HẠN] Chỉ dựng khung tab, nội dung chi tiết làm sau.
+```
+
+Kiểm thử: bấm từng tab, xem tab được tô đúng màu, chuyển qua lại mượt.
+
+## Lab 5.3 — Nối Trang chủ vào Chi tiết sản phẩm
+
+```text
+Từ Trang chủ, khi bấm vào một sản phẩm bất kỳ → mở trang Chi tiết sản phẩm
+(tạm hiện tên + ảnh + giá của đúng sản phẩm đó), có nút quay lại. Bấm quay
+lại phải về Trang chủ ở đúng vị trí đã cuộn trước đó.
+```
+
+<Note>
+Chú ý phần "đúng sản phẩm đó" — bấm rau muống phải ra chi tiết rau muống, không lẫn sang món khác. Đây là lỗi hay gặp, kiểm thử kỹ.
+</Note>
+
+## Lab 5.4 — Làm tab Danh mục
+
+```text
+Tab Danh mục: hiện danh sách các nhóm rau củ (Rau ăn lá, Củ quả, Trái cây...).
+Bấm một nhóm → mở danh sách sản phẩm thuộc nhóm đó, có nút quay lại.
+```
+
+## Lab 5.5 — Thêm ngăn kéo (drawer) cho mục phụ
+
+```text
+Thêm ngăn kéo trượt từ cạnh trái (mở bằng icon 3 gạch góc trái trên),
+chứa các mục: Giới thiệu cửa hàng, Chính sách giao hàng, Liên hệ.
+Mỗi mục tạm mở một màn hình trống có tiêu đề.
+```
+
+## Lab 5.6 — Kiểm thử điều hướng theo checklist QA
+
+Tự kiểm tra kỹ (đây là kỹ năng QA quan trọng):
+
+- [ ] Bấm từng tab: đúng màn hình, tab đúng được tô đậm
+- [ ] Vào chi tiết sản phẩm → quay lại → về đúng vị trí cuộn cũ
+- [ ] Nút back vật lý Android hoạt động đúng
+- [ ] Mở chi tiết sản phẩm A rồi B: hiển thị đúng từng sản phẩm
+- [ ] Drawer mở/đóng mượt, các mục bấm được
+
+Chỗ nào sai, báo AI theo công thức 4 phần và sửa.
+
+## Lab 5.7 — Lưu mốc
+
+```text
+Lưu mốc với ghi chú: "Xong khung điều hướng 4 tab + drawer".
+```
+
+## Checklist hoàn thành
+
+- [ ] Có sơ đồ màn hình vẽ tay
+- [ ] 4 tab hoạt động, giữ vị trí cuộn
+- [ ] Nối được Trang chủ → Chi tiết sản phẩm đúng món
+- [ ] Tab Danh mục lọc theo nhóm
+- [ ] Drawer hoạt động
+- [ ] Đã lưu mốc Git
+
+> App của bạn giờ đã có "bộ xương" hoàn chỉnh — di chuyển được khắp nơi. Các buổi sau chỉ việc thêm "thịt" vào từng phòng!

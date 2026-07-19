@@ -1,0 +1,94 @@
+---
+title: "Buổi 01 — Thực hành: Cài đặt công cụ & chạy thử AI"
+description: "Cài đặt Flutter, VS Code, Claude Code, emulator và thực hiện cuộc trò chuyện đầu tiên với AI."
+---
+
+# Buổi 01 — Thực hành: Sẵn sàng bộ công cụ
+
+> Mục tiêu buổi thực hành: kết thúc buổi, máy của bạn đã cài đủ công cụ và bạn đã **trò chuyện thành công lần đầu với Claude Code**.
+
+<Note>
+Đừng lo nếu bạn thấy nhiều bước cài đặt. Giảng viên và trợ giảng sẽ đi từng bàn hỗ trợ. Mục tiêu là **không ai bị kẹt ở buổi đầu tiên**. Nếu máy bạn có sự cố, sẽ có máy dự phòng đã cài sẵn.
+</Note>
+
+## Lab 1.1 — Kiểm tra & cài đặt công cụ
+
+Làm theo checklist, tick vào ô khi xong từng mục:
+
+- [ ] **Bước 1:** Cài Flutter SDK (dùng script cài sẵn của trung tâm)
+- [ ] **Bước 2:** Cài VS Code + tiện ích mở rộng (extension) Flutter
+- [ ] **Bước 3:** Cài Claude Code và đăng nhập
+- [ ] **Bước 4:** Bật máy ảo điện thoại (emulator) HOẶC cắm điện thoại thật (bật chế độ USB debugging)
+
+### Kiểm tra Flutter đã sẵn sàng
+
+Mở terminal trong VS Code (menu **Terminal → New Terminal**) và gõ:
+
+```bash
+flutter doctor
+```
+
+Lệnh này tự kiểm tra máy bạn. Nếu thấy các dấu ✓ màu xanh là ổn. Nếu có dấu ✗ hoặc ! màu vàng/đỏ:
+
+<Tip>
+Đừng tự sửa. **Copy toàn bộ kết quả `flutter doctor`, dán cho Claude Code và hỏi:** *"Máy tôi còn thiếu gì để chạy được Flutter? Hướng dẫn tôi từng bước bằng tiếng Việt cho người mới."*
+</Tip>
+
+## Lab 1.2 — Trò chuyện đầu tiên với Claude Code
+
+Đây là khoảnh khắc bạn "bắt tay" với người thợ AI. Mở Claude Code và gõ đúng câu này:
+
+```text
+Chào bạn! Tôi là người mới, chưa biết lập trình, đang học khóa Vibe Coding
+để làm app bán rau củ quả tên GreenShop. Hãy tự giới thiệu bạn có thể giúp
+tôi những gì, và cho tôi một mẹo để ra lệnh cho bạn hiệu quả nhất.
+```
+
+Đọc câu trả lời. Đây là lần đầu bạn trải nghiệm: **gõ tiếng Việt → AI hiểu và phản hồi**.
+
+## Lab 1.3 — Ra lệnh nhỏ đầu tiên
+
+Thử yêu cầu AI làm một việc nhỏ để cảm nhận vòng lặp:
+
+```text
+Hãy tạo cho tôi một file ghi chú tên "y-tuong-greenshop.txt" và viết vào đó
+5 nhóm rau củ quả mà một cửa hàng online nên bán.
+```
+
+Sau khi AI làm xong:
+
+1. **Chạy thử (kiểm tra):** mở file đó ra xem AI đã tạo đúng chưa.
+2. **Phản hồi:** yêu cầu AI chỉnh sửa, ví dụ:
+
+```text
+Thêm 3 nhóm nữa, và với mỗi nhóm cho tôi 2 ví dụ sản phẩm cụ thể.
+```
+
+Bạn vừa hoàn thành trọn vẹn **vòng lặp 4 bước** lần đầu tiên: Mô tả → AI làm → Chạy thử → Phản hồi.
+
+## Lab 1.4 — Làm quen "bản đồ" thư mục (chỉ để nhìn, chưa cần hiểu sâu)
+
+Yêu cầu AI dẫn bạn đi tham quan:
+
+```text
+Giải thích cho tôi — người không biết lập trình — một dự án app thường có
+những thư mục/tập tin chính nào, mỗi cái để làm gì. Nói thật đơn giản,
+ví như đồ vật trong nhà.
+```
+
+Bạn chỉ cần nhớ 3 nơi quan trọng:
+
+| Nơi | Là gì |
+|---|---|
+| `lib/` | "Ruột" của app — nơi AI làm việc nhiều nhất |
+| `pubspec.yaml` | Danh sách "nguyên liệu" (thư viện, ảnh, font) |
+| `assets/` | Nơi để ảnh, logo của bạn |
+
+## Checklist hoàn thành buổi thực hành
+
+- [ ] `flutter doctor` chạy được (dù còn cảnh báo cũng không sao, đã hỏi AI cách xử lý)
+- [ ] Đã trò chuyện được với Claude Code bằng tiếng Việt
+- [ ] Đã hoàn thành 1 vòng lặp: yêu cầu → AI làm → kiểm tra → yêu cầu sửa
+- [ ] Hiểu 3 nơi quan trọng: `lib/`, `pubspec.yaml`, `assets/`
+
+> Nếu tick đủ 4 ô — xin chúc mừng, bạn đã sẵn sàng xây app thật ở Buổi 02!

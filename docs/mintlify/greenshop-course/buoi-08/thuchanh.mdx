@@ -1,0 +1,102 @@
+---
+title: "Buổi 08 — Thực hành: Đưa dữ liệu lên Firebase & quản lý kho"
+description: "Kết nối app với Firebase, chuyển sản phẩm lên mây và tự quản lý kho hàng qua Console."
+---
+
+# Buổi 08 — Thực hành: Dữ Liệu Thật Trên Mây
+
+> Kết thúc buổi: sản phẩm GreenShop lưu trên Firebase, bạn tự đổi giá/thêm hàng trên Console và thấy app cập nhật ngay.
+
+## Lab 8.1 — Tạo project Firebase (thao tác chuột)
+
+Làm theo hướng dẫn chiếu màn hình của giảng viên:
+
+- [ ] Vào `console.firebase.google.com`, đăng nhập tài khoản Google
+- [ ] Tạo project mới, đặt tên (ví dụ: `greenshop-abc`)
+- [ ] Bật kho dữ liệu **Firestore Database** (chọn chế độ test khi được hỏi)
+
+<Note>
+Phần này bạn chỉ bấm chuột theo hướng dẫn. Nếu lạc bước nào, chụp màn hình hỏi giảng viên hoặc hỏi Claude Code: "Tôi đang ở bước này trên Firebase, tiếp theo bấm gì?"
+</Note>
+
+## Lab 8.2 — Kết nối app với Firebase (AI làm)
+
+Giao phần kỹ thuật cho AI:
+
+```text
+Kết nối app GreenShop với Firebase project tôi vừa tạo (tên: greenshop-abc).
+Hướng dẫn tôi từng bước những gì cần bấm/copy trên trang Firebase, còn phần
+code và lệnh cài đặt bạn tự làm hết. Giải thích ngắn gọn cho người không biết
+lập trình.
+```
+
+## Lab 8.3 — Chuyển sản phẩm lên mây
+
+```text
+Chuyển toàn bộ sản phẩm mẫu trong app lên Firestore:
+- Mỗi sản phẩm gồm: tên, giá, giá gốc, ảnh, mô tả, danh mục, còn hàng (đúng/sai),
+  nổi bật (đúng/sai), tồn kho
+- Viết giúp tôi công cụ nạp một lần toàn bộ dữ liệu mẫu lên (seed)
+- Từ giờ app đọc sản phẩm từ Firestore thay vì dữ liệu mẫu gắn cứng
+- Tôi đổi giá trên Firebase thì app phải thấy ngay, không cần mở lại app
+```
+
+## Lab 8.4 — Khoảnh khắc "wow": đổi giá realtime
+
+Tự trải nghiệm điều kỳ diệu:
+
+1. Mở app trên điện thoại, để ở màn hình trang chủ
+2. Mở Firebase Console trên máy tính, tìm một sản phẩm
+3. Đổi giá sản phẩm đó (ví dụ 25.000 → 19.000)
+4. **Nhìn vào điện thoại** — giá tự đổi theo!
+
+<Tip>
+Đây là lúc bạn thật sự hiểu "app thật" khác "app demo" thế nào. Hãy thử đổi vài sản phẩm để cảm nhận.
+</Tip>
+
+## Lab 8.5 — Tập làm chủ shop trên Console
+
+Thực hành quản lý kho, hoàn toàn bằng chuột (không code):
+
+**Thêm sản phẩm mới:**
+- [ ] Trên Console, thêm một sản phẩm rau mới đủ các trường
+- [ ] Kiểm tra: nó xuất hiện trong app
+
+**Ẩn hàng hết mùa:**
+```text
+Làm cho app: sản phẩm nào có "còn hàng = Không" thì hiện nhãn "Hết hàng",
+làm mờ ảnh và vô hiệu hóa nút thêm vào giỏ.
+```
+- [ ] Trên Console, đặt một sản phẩm "còn hàng = Không"
+- [ ] Kiểm tra: app hiện "Hết hàng" đúng
+
+**Đưa lên nổi bật:**
+- [ ] Đặt một sản phẩm "nổi bật = Có"
+- [ ] Kiểm tra: nó lên khu Sản phẩm nổi bật ở trang chủ
+
+## Lab 8.6 — Xử lý 3 trạng thái màn hình
+
+```text
+Rà soát mọi màn hình đọc dữ liệu từ Firebase, đảm bảo cả 3 trạng thái:
+đang tải (khung xương lấp lánh), lỗi mạng (thông báo "Không có kết nối" +
+nút Thử lại), danh sách rỗng (hình minh họa + lời nhắn). 
+```
+
+Kiểm thử: bật **chế độ máy bay**, mở app → phải thấy thông báo lỗi tử tế, không phải màn hình trắng.
+
+## Lab 8.7 — Lưu mốc
+
+```text
+Lưu mốc với ghi chú: "App đọc dữ liệu thật từ Firebase, quản lý kho được".
+```
+
+## Checklist hoàn thành
+
+- [ ] Tạo được project Firebase và bật Firestore
+- [ ] App kết nối và đọc sản phẩm từ Firebase
+- [ ] Trải nghiệm đổi giá realtime thành công
+- [ ] Tự thêm/ẩn/nổi bật sản phẩm trên Console
+- [ ] App xử lý đủ 3 trạng thái (test bằng chế độ máy bay)
+- [ ] Đã lưu mốc Git
+
+> Cửa hàng của bạn giờ đã "sống" trên mây — bạn tự vận hành được. Buổi sau: cho khách **đăng nhập và đặt hàng thật**!

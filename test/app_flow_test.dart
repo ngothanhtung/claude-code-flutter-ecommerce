@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tutorials/app/app.dart';
+import 'package:flutter_tutorials/app/main_tab_provider.dart';
 import 'package:flutter_tutorials/app/store_theme_preset.dart';
 import 'package:flutter_tutorials/core/local_store.dart';
 import 'package:flutter_tutorials/core/providers.dart';
@@ -40,9 +41,22 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('home-promo-carousel')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-benefit-strip')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-category-strip')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-trending-section')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('home-new-arrivals-grid')),
+      findsOneWidget,
+    );
     final container = ProviderScope.containerOf(
       tester.element(find.byType(MainScreen)),
     );
+    await tester.tap(find.byKey(const ValueKey('promo-shop-WEEKEND EDIT')));
+    await tester.pumpAndSettle();
+    expect(container.read(mainTabProvider), 1);
+    container.read(mainTabProvider.notifier).showHome();
+    await tester.pumpAndSettle();
 
     final productCard = find.byKey(
       const ValueKey('product-card-airflex-runner'),
@@ -130,8 +144,8 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('store-theme-selector')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('store-theme-autoRed')), findsOneWidget);
-    expect(find.text('Light'), findsNWidgets(3));
-    expect(find.text('Dark'), findsNWidgets(3));
+    expect(find.text('Light'), findsNWidgets(5));
+    expect(find.text('Dark'), findsNWidgets(5));
     await tester.tap(find.byKey(const ValueKey('store-theme-freshGreen')));
     await tester.pumpAndSettle();
     expect(

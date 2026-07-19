@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-enum StoreThemePreset { freshGreen, fastFoodOrange, autoRed }
+enum StoreThemePreset {
+  freshGreen,
+  fastFoodOrange,
+  autoRed,
+  beautyPurple,
+  ebookBrown,
+}
 
 @immutable
 class StoreThemePalette {
@@ -34,18 +40,24 @@ extension StoreThemePresetX on StoreThemePreset {
     StoreThemePreset.freshGreen => 'Fresh Green',
     StoreThemePreset.fastFoodOrange => 'Fast Food Orange',
     StoreThemePreset.autoRed => 'Auto Red',
+    StoreThemePreset.beautyPurple => 'Beauty Purple',
+    StoreThemePreset.ebookBrown => 'Ebook Brown',
   };
 
   String get description => switch (this) {
     StoreThemePreset.freshGreen => 'Organic, calm and naturally fresh',
     StoreThemePreset.fastFoodOrange => 'Warm, energetic and appetite-led',
     StoreThemePreset.autoRed => 'Sporty, premium and performance-led',
+    StoreThemePreset.beautyPurple => 'Elegant, expressive and beauty-led',
+    StoreThemePreset.ebookBrown => 'Warm, editorial and reading-focused',
   };
 
   IconData get icon => switch (this) {
     StoreThemePreset.freshGreen => Icons.eco_outlined,
     StoreThemePreset.fastFoodOrange => Icons.fastfood_outlined,
     StoreThemePreset.autoRed => Icons.directions_car_outlined,
+    StoreThemePreset.beautyPurple => Icons.spa_outlined,
+    StoreThemePreset.ebookBrown => Icons.auto_stories_outlined,
   };
 
   Color get seedColor => palette(Brightness.light).primary;
@@ -127,6 +139,55 @@ extension StoreThemePresetX on StoreThemePreset {
       surface: Color(0xFF151B23),
       onSurface: Color(0xFFE8EDF4),
       outline: Color(0xFF8B949E),
+    ),
+    (StoreThemePreset.beautyPurple, Brightness.light) =>
+      const StoreThemePalette(
+        primary: Color(0xFF7C3AED),
+        onPrimary: Colors.white,
+        secondary: Color(0xFFA21CAF),
+        onSecondary: Colors.white,
+        tertiary: Color(0xFFBE185D),
+        onTertiary: Colors.white,
+        background: Color(0xFFFAF5FF),
+        surface: Color(0xFFFFFFFF),
+        onSurface: Color(0xFF24152F),
+        outline: Color(0xFF7E7186),
+      ),
+    (StoreThemePreset.beautyPurple, Brightness.dark) => const StoreThemePalette(
+      primary: Color(0xFFD8B4FE),
+      onPrimary: Color(0xFF2B0A3D),
+      secondary: Color(0xFFF0ABFC),
+      onSecondary: Color(0xFF321033),
+      tertiary: Color(0xFFFDA4AF),
+      onTertiary: Color(0xFF3A0A16),
+      background: Color(0xFF160D1C),
+      surface: Color(0xFF201328),
+      onSurface: Color(0xFFF4EAF8),
+      outline: Color(0xFF9B8AA3),
+    ),
+    (StoreThemePreset.ebookBrown, Brightness.light) => const StoreThemePalette(
+      primary: Color(0xFF6F4E37),
+      onPrimary: Colors.white,
+      secondary: Color(0xFF8B5E34),
+      onSecondary: Colors.white,
+      tertiary: Color(0xFF7C6F3B),
+      onTertiary: Colors.white,
+      background: Color(0xFFFBF7F2),
+      surface: Color(0xFFFFFEFC),
+      onSurface: Color(0xFF261B14),
+      outline: Color(0xFF7B7068),
+    ),
+    (StoreThemePreset.ebookBrown, Brightness.dark) => const StoreThemePalette(
+      primary: Color(0xFFD7B899),
+      onPrimary: Color(0xFF2D190C),
+      secondary: Color(0xFFE4B77E),
+      onSecondary: Color(0xFF301B05),
+      tertiary: Color(0xFFD8C58A),
+      onTertiary: Color(0xFF282005),
+      background: Color(0xFF15100C),
+      surface: Color(0xFF1E1712),
+      onSurface: Color(0xFFF1E8E0),
+      outline: Color(0xFF988A80),
     ),
   };
 }

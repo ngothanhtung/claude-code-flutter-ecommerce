@@ -1,0 +1,116 @@
+---
+title: "Buổi 09 — Lý thuyết: Đăng nhập & Đặt hàng"
+description: "Hiểu vai trò tài khoản, luồng đặt hàng trọn vẹn, quản lý trạng thái đơn và bảo mật ở mức chủ shop."
+---
+
+# Buổi 09 — Lý thuyết: Đăng Nhập & Luồng Đặt Hàng
+
+## Mục tiêu buổi học
+
+- Hiểu vì sao cần đăng nhập và khi nào nên yêu cầu đăng nhập
+- Nắm **luồng đặt hàng** trọn vẹn của app bán hàng
+- Hiểu **trạng thái đơn hàng** và cách vận hành
+- Nắm 3 nguyên tắc **bảo mật** cơ bản ở mức chủ shop
+
+---
+
+## 1. Vì sao cần đăng nhập?
+
+Đến giờ khách có thể xem hàng, bỏ vào giỏ. Nhưng để **đặt hàng thật**, app cần biết khách là ai: gửi hàng đến đâu, liên hệ thế nào, lưu lịch sử đơn cho ai.
+
+**Đăng nhập** giúp:
+- Lưu địa chỉ, số điện thoại để không phải nhập lại mỗi lần
+- Xem lại lịch sử đơn hàng của mình
+- Đồng bộ giỏ hàng, yêu thích giữa các thiết bị
+
+## 2. Quyết định UX quan trọng: khi nào bắt đăng nhập?
+
+Đây là một **quyết định kinh doanh**, không phải kỹ thuật — và bạn là người quyết.
+
+<Note>
+Nguyên tắc phổ biến: **để khách xem hàng và bỏ vào giỏ tự do, chỉ yêu cầu đăng nhập khi họ bấm "Đặt hàng".** Lý do: bắt đăng nhập quá sớm làm khách nản và rời đi. Càng ít rào cản trước khi khách "phải lòng" sản phẩm, càng nhiều đơn.
+</Note>
+
+Bạn có thể chọn khác nếu hiểu khách mình. Điểm mấu chốt: **bạn quyết định dựa trên chiến lược bán hàng**, AI chỉ thực thi.
+
+## 3. Các cách đăng nhập
+
+| Cách | Ưu điểm | Phù hợp |
+|---|---|---|
+| **Google** | Một chạm, không cần nhớ mật khẩu | Đa số khách có tài khoản Google |
+| **Số điện thoại (OTP)** | Quen thuộc với người Việt, gắn với giao hàng | Khách lớn tuổi, tiện xác minh SĐT |
+
+Nên cung cấp cả hai để khách chọn.
+
+## 4. Luồng đặt hàng trọn vẹn
+
+Từ giỏ hàng đến đơn hoàn tất thường qua 3 bước:
+
+```text
+GIỎ HÀNG
+   │ bấm "Đặt hàng"
+   ▼
+BƯỚC 1: ĐỊA CHỈ GIAO HÀNG
+   - Chọn địa chỉ đã lưu hoặc thêm mới
+   - Họ tên, SĐT, địa chỉ, ghi chú
+   │
+   ▼
+BƯỚC 2: XÁC NHẬN ĐƠN
+   - Danh sách món + số lượng
+   - Địa chỉ giao
+   - Các dòng tiền (tạm tính, giảm giá, ship, tổng)
+   - Chọn cách thanh toán
+   │ bấm "Đặt hàng"
+   ▼
+BƯỚC 3: HOÀN TẤT
+   - Tạo đơn, hiện mã đơn
+   - Màn hình cảm ơn
+   - Dọn sạch giỏ hàng
+```
+
+## 5. Trạng thái đơn hàng — vòng đời của một đơn
+
+Mỗi đơn đi qua các trạng thái, mỗi trạng thái một màu để khách dễ nhận biết:
+
+| Trạng thái | Màu | Ý nghĩa |
+|---|---|---|
+| Chờ xác nhận | Cam | Shop chưa duyệt |
+| Đang giao | Xanh dương | Đơn đang trên đường |
+| Hoàn thành | Xanh lá | Đã giao xong |
+| Đã hủy | Xám | Đơn bị hủy |
+
+**Bạn (chủ shop)** đổi trạng thái trên Firebase Console khi xử lý đơn; **app khách** cập nhật ngay. Đây chính là quy trình xử lý đơn thật của cửa hàng.
+
+## 6. Lịch sử đơn hàng
+
+Khách cần xem lại các đơn đã đặt: đơn nào đang giao, đơn nào xong, chi tiết từng đơn. Đơn "Chờ xác nhận" thường cho phép khách tự hủy (có hỏi xác nhận).
+
+## 7. Bảo mật ở mức chủ shop — chỉ cần hiểu 3 câu
+
+Khi có tài khoản và đơn hàng thật, dữ liệu cần được bảo vệ. Bạn không cần hiểu kỹ thuật, chỉ cần nắm 3 nguyên tắc và yêu cầu AI thực hiện:
+
+1. **Khách chỉ xem được đơn của chính mình** (không xem được đơn người khác).
+2. **Khách không được tự sửa giá hay trạng thái đơn** (tránh gian lận).
+3. **Chỉ chủ shop được sửa sản phẩm** (khách không sửa được kho hàng).
+
+```text
+Rà soát và siết quy tắc bảo mật Firebase theo 3 nguyên tắc: khách chỉ xem
+đơn của mình, khách không sửa được giá/trạng thái đơn, chỉ chủ shop sửa được
+sản phẩm. Giải thích cho tôi bằng ngôn ngữ thường: hiện tại ai xem/sửa được
+gì, và sau khi siết thì thay đổi ra sao.
+```
+
+<Tip>
+Bảo mật nghe có vẻ "kỹ thuật cao", nhưng ở mức của bạn, nó chỉ là trả lời câu hỏi **"ai được làm gì với dữ liệu nào"** — và bạn hoàn toàn trả lời được vì bạn hiểu việc kinh doanh.
+</Tip>
+
+---
+
+## Tóm tắt buổi học
+
+- Đăng nhập cần cho đặt hàng: lưu địa chỉ, lịch sử, đồng bộ thiết bị.
+- Quyết định UX: **cho xem/bỏ giỏ tự do, chỉ bắt đăng nhập khi đặt hàng** — giảm rào cản, tăng đơn.
+- Cung cấp đăng nhập **Google + số điện thoại**.
+- Luồng đặt hàng 3 bước: **địa chỉ → xác nhận → hoàn tất**.
+- **Trạng thái đơn** có màu; chủ shop đổi trên Console, khách thấy ngay.
+- Bảo mật = 3 câu: khách xem đơn của mình, không sửa giá/trạng thái, chỉ shop sửa sản phẩm.

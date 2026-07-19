@@ -1,0 +1,109 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "GreenShop — Flutter Vibe Code",
+  "colors": {
+    "primary": "#2F9E44",
+    "light": "#69DB7C",
+    "dark": "#2B8A3E"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Giáo trình",
+        "groups": [
+          {
+            "group": "Bắt đầu",
+            "pages": [
+              "index"
+            ]
+          },
+          {
+            "group": "Buổi 01 — Nhập môn Vibe Coding",
+            "pages": [
+              "buoi-01/lythuyet",
+              "buoi-01/thuchanh",
+              "buoi-01/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 02 — App đầu tiên & Git an toàn",
+            "pages": [
+              "buoi-02/lythuyet",
+              "buoi-02/thuchanh",
+              "buoi-02/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 03 — Giao diện bằng lời",
+            "pages": [
+              "buoi-03/lythuyet",
+              "buoi-03/thuchanh",
+              "buoi-03/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 04 — Trang chủ & Danh sách sản phẩm",
+            "pages": [
+              "buoi-04/lythuyet",
+              "buoi-04/thuchanh",
+              "buoi-04/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 05 — Điều hướng & Khung app",
+            "pages": [
+              "buoi-05/lythuyet",
+              "buoi-05/thuchanh",
+              "buoi-05/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 06 — Chi tiết sản phẩm & Tìm kiếm",
+            "pages": [
+              "buoi-06/lythuyet",
+              "buoi-06/thuchanh",
+              "buoi-06/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 07 — Giỏ hàng & Quy tắc nghiệp vụ",
+            "pages": [
+              "buoi-07/lythuyet",
+              "buoi-07/thuchanh",
+              "buoi-07/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 08 — Firebase & Quản lý kho",
+            "pages": [
+              "buoi-08/lythuyet",
+              "buoi-08/thuchanh",
+              "buoi-08/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 09 — Đăng nhập & Đặt hàng",
+            "pages": [
+              "buoi-09/lythuyet",
+              "buoi-09/thuchanh",
+              "buoi-09/baitap"
+            ]
+          },
+          {
+            "group": "Buổi 10 — Thanh toán, Thông báo & Tốt nghiệp",
+            "pages": [
+              "buoi-10/lythuyet",
+              "buoi-10/thuchanh",
+              "buoi-10/baitap"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {}
+  }
+}

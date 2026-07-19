@@ -1,0 +1,128 @@
+---
+title: "Buổi 02 — Lý thuyết: App đầu tiên & Git an toàn"
+description: "Hiểu app được tạo ra thế nào bằng lời, cách đổi thương hiệu, và dùng Git như nút Save/Undo."
+---
+
+# Buổi 02 — Lý thuyết: App Đầu Tiên & Lưới An Toàn Git
+
+## Mục tiêu buổi học
+
+- Hiểu app được "khai sinh" thế nào chỉ bằng một câu mô tả
+- Biết cách đổi tên, logo, màu thương hiệu của app bằng lời
+- Nắm vững **Git** như nút Save/Undo — kỹ năng sống còn của Vibe Coder
+- Biết cách phản ứng khi gặp màn hình báo lỗi
+
+---
+
+## 1. Một app ra đời như thế nào?
+
+Bạn không cần dựng app từ con số 0 một cách thủ công. Bạn chỉ cần **mô tả loại app** và AI sẽ tạo bộ khung sẵn sàng chạy. Sau đó bạn "trang trí" nó thành cửa hàng của mình.
+
+Ví dụ, một câu như thế này đủ để có app chạy được:
+
+```text
+Tạo cho tôi app Flutter tên GreenShop — app bán rau củ quả xanh tươi.
+- Màu chủ đạo: xanh lá tươi (#2F9E44), nền trắng
+- Màn hình mở đầu: logo ở giữa, dòng chữ "Rau củ quả sạch giao tận nhà"
+- Font chữ tròn, thân thiện
+Làm xong chạy thử giúp tôi và cho biết cần bấm gì để xem.
+```
+
+<Note>
+Để ý cấu trúc: **tên app + loại hình + màu + màn hình đầu + phong cách**. Càng tả rõ, AI càng làm đúng ý ngay từ đầu, đỡ phải sửa nhiều.
+</Note>
+
+## 2. Chạy app lên điện thoại — vài lệnh cần biết
+
+Bạn chỉ cần nhớ đúng vài thao tác, hoặc thậm chí **nhờ AI chạy hộ**:
+
+```bash
+flutter run     # khởi động app
+```
+
+Khi app đang chạy, trong terminal:
+
+| Phím | Tác dụng | Ví như |
+|---|---|---|
+| `r` | Tải lại thay đổi nhanh (hot reload) | Làm mới trang |
+| `R` | Khởi động lại app | Tắt mở lại app |
+| `q` | Thoát | Đóng app |
+
+<Tip>
+Nếu ngại dùng terminal, cứ nói với Claude Code: *"Chạy app giúp tôi và cho tôi biết khi nào xem được trên điện thoại."*
+</Tip>
+
+## 3. "Trang trí" app thành thương hiệu của bạn
+
+Sau khi có app khung, bạn cá nhân hóa nó bằng lời. Ba thứ dễ đổi nhất:
+
+1. **Tên app** — cái tên hiện dưới icon và trên thanh tiêu đề.
+2. **Màu thương hiệu** — sắc xanh đặc trưng của cửa hàng bạn.
+3. **Màn hình chào** — logo và câu slogan.
+
+Ví dụ:
+
+```text
+Đổi màu chủ đạo của app sang xanh lá non tươi hơn một chút, và đổi câu
+slogan màn hình chào thành "Vườn rau sạch trong tầm tay".
+```
+
+## 4. Git — Nút Save/Undo của Vibe Coder (phần quan trọng nhất buổi)
+
+### 4.1. Vì sao Git là "dây an toàn"?
+
+Khi làm app, sẽ có lúc bạn thử một tính năng mới và **làm hỏng thứ đang chạy tốt**. Nếu không có cách quay lại, bạn sẽ hoảng loạn. Git giải quyết chính xác nỗi sợ này.
+
+Hãy hình dung Git như tính năng **lưu điểm trong game**: trước khi vào "cửa ải khó", bạn lưu lại. Nếu thua, bạn về điểm đã lưu, không mất tiến trình.
+
+### 4.2. Ba thao tác Git bạn cần (làm bằng cách nhờ AI)
+
+Bạn **không cần học lệnh Git**. Chỉ cần nói với Claude Code:
+
+```text
+"Lưu lại mốc hiện tại, ghi chú: đã xong màn hình chào GreenShop"
+```
+
+```text
+"Cho tôi xem danh sách các mốc tôi đã lưu"
+```
+
+```text
+"Phần vừa làm bị hỏng rồi, quay lại mốc trước giúp tôi"
+```
+
+### 4.3. Quy tắc vàng về Git
+
+<Tip>
+**Trước khi thử bất kỳ điều gì lớn → LƯU MỐC.**
+
+Đây là thói quen phân biệt Vibe Coder tự tin với người mới hoảng loạn. Lưu mốc thường xuyên, đặt ghi chú rõ ràng, và bạn sẽ **không bao giờ mất quá nhiều công sức** dù có làm hỏng.
+</Tip>
+
+## 5. Khi gặp màn hình báo lỗi màu đỏ — đừng hoảng
+
+Trong quá trình làm, đôi khi app hiện màn hình đỏ đầy chữ tiếng Anh. **Đây là chuyện bình thường**, kể cả với lập trình viên.
+
+Phản xạ đúng gồm 2 bước:
+
+1. **Bình tĩnh** — lỗi không làm hỏng máy hay mất dữ liệu.
+2. **Copy nguyên văn lỗi**, dán cho Claude Code kèm câu:
+
+```text
+App báo lỗi màn hình đỏ như thế này (dán lỗi vào). Sửa giúp tôi và
+giải thích ngắn gọn vì sao bị lỗi, cho người không biết lập trình.
+```
+
+<Note>
+Bạn **không cần hiểu** lỗi viết gì. Việc của bạn là "chuyển lỗi cho thợ AI xử lý". Việc của AI là đọc hiểu và sửa.
+</Note>
+
+---
+
+## Tóm tắt buổi học
+
+- App được tạo bằng một câu mô tả **tên + loại + màu + màn hình đầu + phong cách**.
+- Cá nhân hóa app (tên, màu, slogan, logo) hoàn toàn bằng lời.
+- **Git = Save/Undo.** Ba thao tác: lưu mốc, xem mốc, quay lại mốc — làm bằng cách nhờ AI.
+- Quy tắc vàng: **lưu mốc trước khi thử điều lớn.**
+- Gặp lỗi đỏ: bình tĩnh → copy → dán cho AI sửa.

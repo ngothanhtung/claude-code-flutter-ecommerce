@@ -1,0 +1,96 @@
+---
+title: "Buổi 04 — Thực hành: Dựng trang chủ GreenShop hoàn chỉnh"
+description: "Ghép các khối và thêm lưới sản phẩm rau củ quả từ bảng tính dữ liệu mẫu."
+---
+
+# Buổi 04 — Thực hành: Trang Chủ Rau Củ Quả Của Tôi
+
+> Kết thúc buổi: bạn có một trang chủ GreenShop hoàn chỉnh với banner, danh mục và lưới 12 sản phẩm rau củ quả.
+
+## Lab 4.1 — Soạn bảng dữ liệu 12 sản phẩm
+
+Trước khi dựng, hãy có "hàng để bày". Mở Google Sheets/Excel, tạo bảng 12 sản phẩm rau củ quả với các cột: **Tên, Giá, Giá gốc, Danh mục, Còn hàng, Nổi bật**.
+
+Nếu chưa có sẵn ý tưởng, nhờ AI:
+
+```text
+Tạo cho tôi một bảng 12 sản phẩm rau củ quả mẫu, đủ các cột: tên, giá,
+giá gốc, danh mục, còn hàng, nổi bật. Giá theo thị trường Việt Nam.
+Trình bày dạng bảng để tôi copy được.
+```
+
+## Lab 4.2 — Ghép trang chủ từ các khối
+
+Dùng các khối đã làm ở buổi 3, yêu cầu AI ghép thành trang chủ:
+
+```text
+[BỐI CẢNH] App GreenShop, làm màn hình Trang chủ hoàn chỉnh.
+[YÊU CẦU]  Ghép thành trang chủ gồm 4 khối từ trên xuống:
+1. Thanh trên: ô tìm kiếm bo tròn + icon giỏ hàng có chấm đỏ số lượng
+2. Banner khuyến mãi: ảnh cuộn ngang tự chạy, có chấm chỉ vị trí
+3. Danh mục: 8 icon tròn cuộn ngang (Rau ăn lá, Củ quả, Trái cây, Rau gia vị,
+   Nấm, Rau organic, Combo gia đình, Trái cây nhập khẩu)
+4. "Sản phẩm nổi bật": lưới 2 cột
+[CHI TIẾT] Tông màu xanh lá, gọn gàng tươi sáng. Cả trang cuộn được.
+[GIỚI HẠN] Chưa cần bấm được, làm giao diện trước.
+```
+
+## Lab 4.3 — Nạp dữ liệu sản phẩm vào lưới
+
+Đưa bảng dữ liệu vào app:
+
+```text
+Đây là 12 sản phẩm của tôi (dán bảng vào). Đưa vào app làm dữ liệu mẫu,
+hiển thị lên lưới "Sản phẩm nổi bật" ở trang chủ. Mỗi ô có ảnh, tên (tối đa
+2 dòng), giá màu xanh lá đậm.
+```
+
+## Lab 4.4 — Trau chuốt định dạng hiển thị
+
+Áp dụng các chi tiết chuyên nghiệp bằng iterate:
+
+```text
+Giá tiền hiển thị có dấu chấm ngăn cách (ví dụ 25.000đ), không phải 25000.
+```
+
+```text
+Sản phẩm nào có giá gốc cao hơn giá bán: hiện giá gốc gạch ngang màu xám và
+nhãn phần trăm giảm (-20%) màu đỏ ở góc.
+```
+
+```text
+Sản phẩm "Nổi bật = Có" mới hiện trong khu Sản phẩm nổi bật. Thêm hiệu ứng
+nhấn nhẹ khi chạm vào một ô sản phẩm.
+```
+
+## Lab 4.5 — Xử lý trạng thái đang tải & trống
+
+```text
+Thêm cho lưới sản phẩm: khi đang tải hiện khung xương lấp lánh; nếu không có
+sản phẩm nào hiện hình minh họa + chữ "Chưa có sản phẩm nào".
+```
+
+## Lab 4.6 — Nghiệm thu & lưu mốc
+
+Cuộn toàn bộ trang chủ, kiểm tra:
+
+- [ ] Banner tự chạy, vuốt được
+- [ ] Danh mục cuộn ngang mượt
+- [ ] Lưới sản phẩm hiển thị đúng 12 món, giá có dấu chấm
+- [ ] Sản phẩm giảm giá hiện đúng nhãn
+
+Lưu mốc:
+
+```text
+Lưu mốc với ghi chú: "Xong trang chủ GreenShop với 12 sản phẩm mẫu".
+```
+
+## Checklist hoàn thành
+
+- [ ] Có bảng dữ liệu 12 sản phẩm rau củ quả
+- [ ] Trang chủ ghép đủ 4 khối, cuộn được
+- [ ] Lưới sản phẩm hiển thị dữ liệu, định dạng giá đẹp
+- [ ] Xử lý được trạng thái đang tải và trống
+- [ ] Đã lưu mốc Git
+
+> Trang chủ chính là "bộ mặt" cửa hàng bạn — giờ nó đã sẵn sàng đón khách!

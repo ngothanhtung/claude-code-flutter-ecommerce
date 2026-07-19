@@ -1,0 +1,54 @@
+---
+title: "Buổi 08 — Bài tập về nhà: Hoàn thiện kho hàng thật"
+description: "Đưa toàn bộ sản phẩm thật lên Firebase và luyện kỹ năng quản lý kho."
+---
+
+# Buổi 08 — Bài tập về nhà
+
+## Bài 1 — Kho hàng thật đầy đủ (bắt buộc)
+
+Đưa **tối thiểu 20 sản phẩm rau củ quả thật** của cửa hàng bạn lên Firestore (dùng bảng dữ liệu đã soạn ở các buổi trước). Đảm bảo:
+
+- Phân đúng danh mục
+- Có ảnh cho mỗi sản phẩm (dán đường dẫn hoặc tải lên Storage)
+- Điền đủ tồn kho, đánh dấu vài sản phẩm nổi bật và vài sản phẩm giảm giá
+
+## Bài 2 — Bộ lọc & sắp xếp trên dữ liệu thật (bắt buộc)
+
+```text
+Ở trang danh mục, thêm bộ lọc theo khoảng giá và sắp xếp (giá tăng/giảm,
+mới nhất) hoạt động trên dữ liệu thật từ Firebase.
+```
+
+## Bài 3 — Cảnh báo tồn kho (bắt buộc)
+
+```text
+Sản phẩm có tồn kho từ 5 trở xuống: hiện nhãn "Sắp hết - chỉ còn X" màu cam
+để tạo cảm giác khan hiếm nhẹ. Tồn kho = 0 thì tự động hiện "Hết hàng".
+```
+
+Thử đổi tồn kho trên Console và xem app phản ứng.
+
+## Bài 4 — Luyện vận hành hằng ngày (khuyến khích)
+
+Đóng vai chủ shop một ngày làm việc. Trên Console, thực hiện:
+
+- Thêm 3 sản phẩm "rau mới về hôm nay"
+- Giảm giá 2 sản phẩm "cận ngày"
+- Ẩn 1 sản phẩm "hết mùa"
+- Đưa 2 sản phẩm mới lên nổi bật
+
+Kiểm tra tất cả thay đổi hiện đúng trong app. Đây là bài tập mô phỏng công việc thật sau khóa học.
+
+## Bài 5 — Kiểm tra khả năng chịu lỗi mạng (khuyến khích)
+
+Bật/tắt chế độ máy bay nhiều lần ở các màn hình khác nhau. Ghi lại màn hình nào xử lý lỗi chưa tốt (còn trắng/treo) và nhờ AI sửa cho tử tế.
+
+## Nộp bài
+
+- Firebase có ≥ 20 sản phẩm thật, phân loại đầy đủ.
+- App hiển thị cảnh báo tồn kho.
+- Đã luyện thao tác quản lý kho trên Console.
+- Mốc Git đã lưu.
+
+> **Buổi tới (09):** Cho khách **đăng nhập** và hoàn thành **luồng đặt hàng** trọn vẹn — từ giỏ hàng đến đơn hàng thật, có lịch sử và trạng thái đơn.

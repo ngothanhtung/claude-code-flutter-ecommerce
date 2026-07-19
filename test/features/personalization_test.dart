@@ -89,6 +89,16 @@ void main() {
     expect((orangeHue - redHue).abs(), greaterThan(15));
   });
 
+  test('Beauty Purple and Ebook Brown keep their industry hues', () {
+    final purple = StoreThemePreset.beautyPurple.palette(Brightness.light);
+    final brown = StoreThemePreset.ebookBrown.palette(Brightness.light);
+
+    expect(HSVColor.fromColor(purple.primary).hue, inInclusiveRange(250, 290));
+    expect(HSVColor.fromColor(brown.primary).hue, inInclusiveRange(15, 40));
+    expect(purple.background, const Color(0xFFFAF5FF));
+    expect(brown.background, const Color(0xFFFBF7F2));
+  });
+
   test('all preset palettes meet AA contrast in light and dark mode', () {
     for (final preset in StoreThemePreset.values) {
       for (final brightness in Brightness.values) {

@@ -1,0 +1,108 @@
+---
+title: "Buổi 06 — Lý thuyết: Chi tiết sản phẩm & Tìm kiếm"
+description: "Thiết kế trang chi tiết sản phẩm thuyết phục và hiểu cách tìm kiếm thông minh hoạt động."
+---
+
+# Buổi 06 — Lý thuyết: Trang Chi Tiết & Tìm Kiếm
+
+## Mục tiêu buổi học
+
+- Hiểu vai trò của trang chi tiết sản phẩm trong việc **thuyết phục khách mua**
+- Biết một trang chi tiết tốt cần có gì
+- Hiểu cách **tìm kiếm thông minh** hoạt động (lọc theo từ, không dấu, gợi ý)
+- Biết mô tả các yêu cầu này cho AI
+
+---
+
+## 1. Trang chi tiết — nơi khách quyết định mua
+
+Trang chủ để khách **duyệt lướt**. Trang chi tiết là nơi khách **dừng lại, cân nhắc và quyết định**. Với đồ ăn tươi như rau củ quả, khách đặc biệt quan tâm: có tươi không, nguồn gốc ở đâu, giá bao nhiêu, giao khi nào.
+
+Một trang chi tiết tốt trả lời hết những câu hỏi đó, khiến khách yên tâm bấm "Thêm vào giỏ".
+
+## 2. Một trang chi tiết sản phẩm rau củ cần có gì?
+
+```text
+┌─────────────────────────────┐
+│  ◄ (quay lại)         ♡ ⤴  │  ← Nút quay lại, yêu thích, chia sẻ
+│  ┌───────────────────────┐  │
+│  │                       │  │
+│  │   Ảnh sản phẩm lớn    │  │  ← Vuốt ngang xem nhiều ảnh
+│  │   (vuốt xem thêm)     │  │
+│  └───────────────────────┘  │
+│  Rau cải ngọt hữu cơ         │  ← Tên
+│  25.000đ  ̶3̶0̶.̶0̶0̶0̶đ̶  -17%    │  ← Giá, giá gốc, giảm
+│  ⭐ 4.8 (25 đánh giá)        │  ← Đánh giá
+│  ────────────────────────   │
+│  📍 Nguồn gốc: Đà Lạt        │  ← Thông tin thêm
+│  🌿 Canh tác hữu cơ          │
+│  📦 Còn 15 bó                │
+│  ────────────────────────   │
+│  Mô tả: Rau cải ngọt tươi... │  ← Mô tả
+│                             │
+│  [ - ] 1 [ + ]  Chọn số lượng│
+├─────────────────────────────┤
+│   🧺 THÊM VÀO GIỎ HÀNG      │  ← Nút cố định dưới đáy
+└─────────────────────────────┘
+```
+
+<Note>
+Chú ý nút "Thêm vào giỏ" **cố định ở đáy** — dù khách cuộn đọc mô tả dài tới đâu, nút mua luôn trong tầm tay. Chi tiết nhỏ này tăng tỷ lệ mua hàng.
+</Note>
+
+## 3. Những yếu tố tạo lòng tin cho khách mua rau
+
+Rau củ quả là mặt hàng "nhạy cảm" về độ tươi. Các yếu tố sau giúp khách yên tâm:
+
+- **Nguồn gốc rõ ràng** (Đà Lạt, hữu cơ, VietGAP...)
+- **Ảnh thật, đẹp, nhiều góc**
+- **Thông tin bảo quản** (để tủ lạnh được mấy ngày)
+- **Đánh giá từ người mua trước**
+- **Tồn kho** ("Còn 15 bó" tạo cảm giác khan hiếm nhẹ)
+
+Bạn — người hiểu ngành hàng — quyết định hiển thị thông tin nào. AI chỉ thực thi.
+
+## 4. Tìm kiếm thông minh — hiểu cách nó hoạt động
+
+Tìm kiếm là tính năng khách dùng rất nhiều. Một ô tìm kiếm tốt không chỉ là "gõ rồi bấm tìm". Nó cần:
+
+### 4.1. Lọc ngay khi gõ (real-time)
+
+Gõ đến đâu, danh sách lọc đến đó — không cần bấm nút. Gõ "cà" → hiện ngay cà rốt, cà chua, cà tím.
+
+### 4.2. Không phân biệt hoa thường
+
+Gõ "RAU" hay "rau" đều ra kết quả như nhau.
+
+### 4.3. Tìm được cả khi gõ không dấu
+
+Người Việt hay gõ không dấu cho nhanh. Gõ "rau muong" vẫn phải ra "Rau muống". Đây là chi tiết quan trọng cho app Việt.
+
+### 4.4. Gợi ý khi chưa gõ gì
+
+Khi ô tìm kiếm còn trống, hiện sẵn các từ khóa phổ biến dạng nút bấm (chip): "Rau organic", "Trái cây", "Combo"...
+
+### 4.5. Thông báo tử tế khi không tìm thấy
+
+Không để màn hình trắng. Hiện hình minh họa + "Không tìm thấy sản phẩm nào. Thử từ khóa khác nhé!"
+
+<Tip>
+Bạn không cần biết tìm kiếm hoạt động thế nào bên trong. Chỉ cần liệt kê 5 yêu cầu trên cho AI — nó lo phần kỹ thuật.
+</Tip>
+
+## 5. Yêu thích & chia sẻ — giữ chân và lan tỏa
+
+Hai tính năng nhỏ nhưng giá trị:
+
+- **Yêu thích (trái tim):** khách lưu sản phẩm để mua sau. Danh sách yêu thích xem ở tab Tài khoản.
+- **Chia sẻ:** khách gửi sản phẩm cho bạn bè qua Zalo, Messenger... (mở khay chia sẻ sẵn có của điện thoại). Đây là kênh marketing miễn phí.
+
+---
+
+## Tóm tắt buổi học
+
+- Trang chi tiết là nơi khách **quyết định mua** — cần đầy đủ và tạo lòng tin.
+- Với rau củ, nhấn mạnh **nguồn gốc, độ tươi, ảnh thật, tồn kho, đánh giá**.
+- Nút "Thêm vào giỏ" nên **cố định ở đáy**.
+- Tìm kiếm thông minh: lọc ngay khi gõ, không phân biệt hoa thường, **tìm được cả khi gõ không dấu**, gợi ý từ khóa, thông báo tử tế khi không thấy.
+- Thêm **yêu thích** (giữ chân) và **chia sẻ** (lan tỏa).

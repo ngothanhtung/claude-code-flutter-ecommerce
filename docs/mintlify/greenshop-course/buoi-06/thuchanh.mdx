@@ -1,0 +1,91 @@
+---
+title: "Buổi 06 — Thực hành: Trang chi tiết & tìm kiếm"
+description: "Dựng trang chi tiết sản phẩm đầy đủ và tính năng tìm kiếm thông minh cho GreenShop."
+---
+
+# Buổi 06 — Thực hành: Chi Tiết Sản Phẩm & Tìm Kiếm
+
+> Kết thúc buổi: khách xem được chi tiết từng sản phẩm rau củ và tìm kiếm gõ đến đâu lọc đến đó.
+
+## Lab 6.1 — Dựng trang chi tiết sản phẩm đầy đủ
+
+Nâng cấp trang chi tiết tạm ở buổi 5 thành trang hoàn chỉnh:
+
+```text
+[BỐI CẢNH] App GreenShop, nâng cấp trang Chi tiết sản phẩm.
+[YÊU CẦU]  Dựng trang chi tiết đầy đủ cho sản phẩm rau củ.
+[CHI TIẾT] Từ trên xuống:
+           - Ảnh lớn vuốt ngang xem nhiều ảnh, nút quay lại + yêu thích + chia sẻ
+           - Tên sản phẩm, giá (giá gốc gạch ngang + % giảm nếu có)
+           - Đánh giá sao + số lượt đánh giá
+           - Khối thông tin: nguồn gốc, cách canh tác, tồn kho ("Còn X")
+           - Mô tả sản phẩm
+           - Chọn số lượng bằng nút - và +
+           - Nút "THÊM VÀO GIỎ HÀNG" cố định ở đáy màn hình
+[CHI TIẾT] Lấy đúng thông tin của sản phẩm được bấm từ trang chủ.
+```
+
+Kiểm thử: bấm nhiều sản phẩm khác nhau, xem có hiện đúng từng món không.
+
+## Lab 6.2 — Nút số lượng hoạt động
+
+```text
+Nút - và + để chọn số lượng: bấm + thì tăng, bấm - thì giảm, không cho
+giảm dưới 1. Số lượng hiện ở giữa hai nút.
+```
+
+## Lab 6.3 — Làm ô tìm kiếm thông minh
+
+```text
+[BỐI CẢNH] App GreenShop, làm tính năng tìm kiếm.
+[YÊU CẦU]  Bấm ô tìm kiếm ở Trang chủ → mở màn hình Tìm kiếm, bàn phím tự bật.
+[CHI TIẾT] - Gõ đến đâu lọc sản phẩm đến đó (tên chứa từ khóa)
+           - Không phân biệt hoa thường
+           - Gõ không dấu vẫn tìm ra có dấu (ví dụ "rau muong" ra "Rau muống")
+           - Khi chưa gõ gì: hiện các từ khóa gợi ý dạng nút bấm
+             (Rau organic, Trái cây, Combo, Nấm...)
+           - Không tìm thấy: hiện hình minh họa + "Không tìm thấy sản phẩm nào.
+             Thử từ khóa khác nhé!"
+```
+
+## Lab 6.4 — Kiểm thử tìm kiếm kỹ lưỡng
+
+Thử từng tình huống, tick khi đạt:
+
+- [ ] Gõ "rau" → hiện các loại rau
+- [ ] Gõ "RAU" (hoa) → vẫn ra kết quả như "rau"
+- [ ] Gõ "ca rot" (không dấu) → ra "Cà rốt"
+- [ ] Xóa hết chữ → hiện lại các từ khóa gợi ý
+- [ ] Gõ "xyz123" → hiện thông báo không tìm thấy tử tế
+
+Chỗ nào chưa đạt, báo AI sửa.
+
+## Lab 6.5 — Yêu thích & chia sẻ
+
+```text
+Nút trái tim ở trang chi tiết: bấm để yêu thích (đổi thành tim đỏ đầy),
+bấm lại để bỏ. Nút chia sẻ: mở khay chia sẻ của điện thoại với tên và
+giá sản phẩm.
+```
+
+<Note>
+Danh sách yêu thích sẽ hiện ở tab Tài khoản — buổi này tạm lưu tạm, buổi sau (giỏ hàng) và buổi 8 (Firebase) sẽ hoàn thiện việc lưu trữ.
+</Note>
+
+## Lab 6.6 — Lưu mốc
+
+```text
+Lưu mốc với ghi chú: "Xong trang chi tiết + tìm kiếm thông minh".
+```
+
+## Checklist hoàn thành
+
+- [ ] Trang chi tiết đầy đủ, hiện đúng sản phẩm được bấm
+- [ ] Nút số lượng - / + hoạt động
+- [ ] Nút "Thêm vào giỏ" cố định đáy màn hình
+- [ ] Tìm kiếm lọc ngay khi gõ, tìm được cả không dấu
+- [ ] Có gợi ý từ khóa và thông báo không tìm thấy tử tế
+- [ ] Yêu thích & chia sẻ hoạt động
+- [ ] Đã lưu mốc Git
+
+> Khách giờ có thể tìm và tìm hiểu kỹ từng sản phẩm. Buổi sau: cho họ **bỏ vào giỏ và tính tiền**!

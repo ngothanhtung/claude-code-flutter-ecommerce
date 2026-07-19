@@ -1,0 +1,111 @@
+---
+title: "Buổi 08 — Lý thuyết: Firebase — Dữ liệu thật & Quản lý kho"
+description: "Hiểu dữ liệu trên mây, cách app đọc dữ liệu thật và cách chủ shop tự quản lý kho không cần code."
+---
+
+# Buổi 08 — Lý thuyết: Dữ Liệu Thật Trên Mây
+
+## Mục tiêu buổi học
+
+- Hiểu **Firebase** là gì qua ẩn dụ đơn giản
+- Hiểu sự khác biệt giữa **dữ liệu mẫu** và **dữ liệu thật trên mây**
+- Biết mình sẽ **tự quản lý cửa hàng** thế nào mà không cần code
+- Hiểu 3 trạng thái của màn hình có dữ liệu mạng
+
+---
+
+## 1. Vấn đề của dữ liệu mẫu
+
+Đến giờ, sản phẩm trong app là **dữ liệu mẫu** — gắn cứng trong app. Điều này có một hạn chế lớn:
+
+> Mỗi khi muốn đổi giá một bó rau, bạn phải nhờ AI sửa code và cài lại app. **Không thực tế** cho việc kinh doanh hằng ngày.
+
+App bán hàng thật cần: chủ shop đổi giá, thêm hàng, ẩn hàng hết mùa **bất cứ lúc nào**, và khách thấy thay đổi **ngay lập tức** mà không phải cập nhật app.
+
+## 2. Firebase là gì? — "Google Sheets siêu cấp cho app"
+
+**Firebase** là kho dữ liệu đặt trên mây (trên máy chủ của Google). Hãy hình dung nó như một **bảng tính Google Sheets khổng lồ, thông minh**, mà app của bạn kết nối tới để đọc/ghi dữ liệu.
+
+```text
+        ☁️ FIREBASE (trên mây)
+        ┌────────────────────┐
+        │  Sản phẩm          │
+        │  Đơn hàng          │
+        │  Tài khoản         │
+        └─────────┬──────────┘
+                  │ đọc/ghi qua internet
+      ┌───────────┼───────────┐
+      ▼           ▼           ▼
+   App khách   App khách   Bạn (chủ shop)
+   (điện thoại)(điện thoại) (trình duyệt web)
+```
+
+Điểm mấu chốt: **dữ liệu nằm trên mây, không nằm trong app**. Nên bạn đổi dữ liệu ở một nơi, mọi app đều thấy.
+
+## 3. Điều kỳ diệu: cập nhật tức thì (realtime)
+
+Đây là khoảnh khắc "wow" của khóa học. Khi dùng Firebase:
+
+> Bạn đổi giá một sản phẩm trên trang quản lý Firebase → app trên tay khách **tự đổi theo ngay lập tức**, không cần khách làm gì.
+
+Điều này biến app "bài tập" thành app "thật". Bạn có một cửa hàng sống động, cập nhật liên tục.
+
+## 4. Bạn sẽ quản lý cửa hàng như thế nào?
+
+Sau buổi này, bạn quản lý toàn bộ kho hàng qua **Firebase Console** — một trang web, thao tác bằng chuột, **không cần code**:
+
+| Việc | Cách làm |
+|---|---|
+| Thêm sản phẩm mới | Thêm một dòng dữ liệu trên Console → xuất hiện trong app |
+| Đổi giá | Sửa ô giá → app cập nhật ngay |
+| Ẩn hàng hết mùa | Đặt "còn hàng = Không" → app hiện "Hết hàng", nút mua bị mờ |
+| Đưa lên nổi bật | Đặt "nổi bật = Có" → lên khu Sản phẩm nổi bật |
+
+<Note>
+Đây chính là **cách vận hành thật** sau khóa học. Mỗi sáng bạn mở Console, cập nhật rau mới về, đổi giá theo thị trường — như quản lý một cửa hàng online thật sự. Không bao giờ cần đụng vào code.
+</Note>
+
+## 5. Chia việc: bạn làm gì, AI làm gì?
+
+| Phần việc | Ai làm |
+|---|---|
+| Tạo project Firebase, bật kho dữ liệu (bấm chuột theo hướng dẫn) | **Bạn** |
+| Kết nối app với Firebase (phần kỹ thuật) | **AI** |
+| Chuyển dữ liệu mẫu lên mây | **AI** |
+| Quản lý sản phẩm hằng ngày trên Console | **Bạn** |
+
+AI làm phần khó (kết nối, code); bạn làm phần thao tác chuột (quản lý kho) — đúng thế mạnh mỗi bên.
+
+## 6. Ba trạng thái bắt buộc khi dữ liệu đến từ mạng
+
+Khi dữ liệu nằm trên mây, app phải tải qua internet — và internet có thể chậm hoặc mất. App tử tế phải xử lý cả 3 tình huống:
+
+| Trạng thái | App phải hiện gì |
+|---|---|
+| **Đang tải** | Khung xương lấp lánh (skeleton), không để trắng trơn |
+| **Lỗi mạng** | "Không có kết nối" + nút "Thử lại" |
+| **Trống** | Hình minh họa + lời nhắn thân thiện |
+
+<Tip>
+Cách kiểm tra nhanh: bật **chế độ máy bay** trên điện thoại rồi mở app. Nếu app hiện thông báo lỗi tử tế (không phải màn hình trắng hay treo), là bạn đã làm đúng.
+</Tip>
+
+## 7. Ảnh sản phẩm — lưu ở đâu?
+
+Ảnh không lưu chung với dữ liệu chữ. Firebase có kho riêng cho ảnh (**Storage**). Bạn có 2 cách:
+
+1. **Dán đường dẫn ảnh** có sẵn trên mạng (nhanh, đơn giản, hợp lúc học).
+2. **Tải ảnh thật lên Firebase Storage** (chuyên nghiệp hơn, ảnh của chính bạn).
+
+Buổi này ưu tiên cách 1 cho nhanh; ai muốn có thể nhờ AI làm luồng tải ảnh lên.
+
+---
+
+## Tóm tắt buổi học
+
+- Dữ liệu mẫu gắn cứng trong app → không đổi được linh hoạt.
+- **Firebase** = kho dữ liệu trên mây, như "Google Sheets siêu cấp".
+- Điều kỳ diệu: đổi dữ liệu trên mây → app cập nhật **tức thì**.
+- Bạn quản lý cửa hàng qua **Console** (bấm chuột, không cần code): thêm/sửa/ẩn hàng, đổi giá.
+- AI làm phần kết nối kỹ thuật; bạn làm phần quản lý.
+- Xử lý 3 trạng thái: đang tải / lỗi mạng / trống. Test bằng chế độ máy bay.

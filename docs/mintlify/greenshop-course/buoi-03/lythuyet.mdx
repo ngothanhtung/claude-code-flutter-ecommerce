@@ -1,0 +1,114 @@
+---
+title: "Buổi 03 — Lý thuyết: Giao diện bằng lời (nền tảng)"
+description: "Học từ vựng mô tả bố cục, khung prompt chuẩn và kỹ thuật iterate để AI dựng đúng giao diện."
+---
+
+# Buổi 03 — Lý thuyết: Ngôn Ngữ Mô Tả Giao Diện
+
+## Mục tiêu buổi học
+
+- Nắm bộ **từ vựng mô tả bố cục** bằng tiếng Việt đời thường (không cần thuật ngữ kỹ thuật)
+- Học **khung prompt chuẩn** dùng cho cả khóa
+- Thành thạo kỹ thuật **iterate** — chỉnh từng chút thay vì làm lại
+- Biết dùng ảnh tham khảo để mô tả nhanh và chính xác
+
+---
+
+## 1. Vì sao mô tả giao diện là kỹ năng quan trọng nhất?
+
+Trong Vibe Coding, giao diện app đẹp hay xấu, đúng ý hay lệch ý — phụ thuộc gần như hoàn toàn vào **bạn mô tả tốt tới đâu**. AI không đọc được suy nghĩ; nó chỉ làm theo lời bạn.
+
+Tin vui: bạn **không cần** biết thuật ngữ kỹ thuật như "widget", "flexbox". Bạn chỉ cần tả rõ như đang chỉ cho một người bạn cách sắp xếp đồ trong phòng.
+
+## 2. Bộ từ vựng mô tả bố cục (học thuộc bảng này)
+
+| Bạn muốn gì | Nói với AI thế nào |
+|---|---|
+| Xếp ngang | "các mục nằm ngang trên một hàng, cách đều nhau" |
+| Xếp dọc | "xếp từ trên xuống dưới" |
+| Dạng lưới | "lưới 2 cột giống các app bán hàng" |
+| Cuộn ngang | "một dải cuộn ngang, vuốt để xem thêm" |
+| Đè lên nhau | "giá tiền nằm đè lên góc dưới của ảnh" |
+| Thoáng hơn | "tăng khoảng cách giữa các phần cho dễ thở" |
+| Bo tròn | "bo góc mềm mại" |
+| Nổi bật | "chữ to hơn, in đậm, màu xanh lá đậm" |
+| Cố định | "nút này luôn nằm cố định ở đáy màn hình" |
+
+<Tip>
+In bảng này ra dán cạnh máy. Khi bí từ, nhìn vào đây là mô tả được ngay.
+</Tip>
+
+## 3. Khung prompt chuẩn — dùng suốt cả khóa
+
+Đây là "công thức" giúp prompt của bạn rõ ràng, AI làm đúng ngay:
+
+```text
+[BỐI CẢNH]  App GreenShop, đang ở màn hình <tên màn hình>
+[YÊU CẦU]   Tôi muốn <mô tả bằng lời như nói với nhân viên>
+[CHI TIẾT]  - Trông giống: <app tham khảo / ảnh đính kèm>
+            - Khi bấm <nút> thì <điều gì xảy ra>
+            - Thông tin hiển thị gồm: <liệt kê>
+[GIỚI HẠN]  Chỉ sửa phần này, không đụng phần khác.
+            Làm xong hãy cho tôi biết cần bấm gì để xem.
+```
+
+Không phải lúc nào cũng cần đủ 4 phần, nhưng càng đủ thì kết quả càng sát ý.
+
+## 4. Kỹ thuật ITERATE — bí quyết quan trọng nhất
+
+### 4.1. Đừng nói "làm lại đi"
+
+Khi chưa ưng, người mới hay nói "làm lại từ đầu". Điều này khiến AI **bỏ luôn cả những phần đang tốt**. Thay vào đó, hãy **giữ cái tốt, chỉ sửa cái chưa ổn**.
+
+### 4.2. Công thức iterate: "Giữ nguyên... chỉ đổi..."
+
+```text
+"Giữ nguyên mọi thứ, chỉ làm ảnh sản phẩm bo góc mềm hơn."
+```
+
+```text
+"Banner đang cao quá, giảm còn khoảng một phần tư màn hình."
+```
+
+```text
+"Giá tiền hiển thị dạng 25.000đ có dấu chấm ngăn cách, không phải 25000."
+```
+
+<Note>
+Iterate là cách làm việc **bình thường và đúng đắn**, không phải dấu hiệu bạn kém. Ngay cả chuyên gia cũng chỉnh nhiều vòng. Mỗi vòng làm sản phẩm tốt hơn một chút.
+</Note>
+
+## 5. Dùng ảnh tham khảo — "một tấm ảnh hơn ngàn lời tả"
+
+Cách nhanh nhất để AI hiểu bạn muốn gì là **đưa cho nó một tấm ảnh**:
+
+```text
+[BỐI CẢNH] App GreenShop, màn hình trang chủ.
+[YÊU CẦU]  Dựng bố cục giống ảnh tôi đính kèm, nhưng thay bằng rau củ quả
+           của cửa hàng tôi.
+[CHI TIẾT] Giữ cách sắp xếp và khoảng cách như ảnh, đổi màu sang tông xanh lá.
+```
+
+Kết hợp **ảnh + lời** là cách mô tả mạnh nhất: ảnh cho AI thấy bố cục tổng thể, lời cho biết điều chỉnh cụ thể.
+
+## 6. Ba trạng thái của một màn hình (khái niệm quan trọng)
+
+Một màn hình tốt không chỉ đẹp khi mọi thứ suôn sẻ. Nó phải xử lý được 3 tình huống:
+
+| Trạng thái | Nghĩa là gì | App nên hiện gì |
+|---|---|---|
+| **Có dữ liệu** | Mọi thứ ổn | Nội dung bình thường |
+| **Đang tải** | Chờ dữ liệu về | Khung xương lấp lánh, không để trắng trơn |
+| **Trống / lỗi** | Không có gì để hiện | Hình minh họa + lời nhắn thân thiện |
+
+Ngay từ bây giờ, tập thói quen yêu cầu AI xử lý cả 3 trạng thái, để app luôn "tử tế" với người dùng.
+
+---
+
+## Tóm tắt buổi học
+
+- Mô tả giao diện = kỹ năng quan trọng nhất; dùng **từ vựng đời thường**, không cần thuật ngữ.
+- Dùng **khung prompt chuẩn** (Bối cảnh / Yêu cầu / Chi tiết / Giới hạn).
+- **Iterate** bằng công thức "Giữ nguyên... chỉ đổi...", đừng bao giờ "làm lại đi".
+- Đính kèm **ảnh tham khảo** để mô tả nhanh và chính xác.
+- Luôn nghĩ tới 3 trạng thái màn hình: có dữ liệu / đang tải / trống-lỗi.

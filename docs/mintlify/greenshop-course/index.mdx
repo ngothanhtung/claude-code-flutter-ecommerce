@@ -1,0 +1,123 @@
+---
+title: "Tổng quan khóa học — Flutter Vibe Code: Xây app bán rau củ quả GreenShop"
+description: "Khóa học 10 buổi dành cho người KHÔNG biết lập trình. Dùng AI (Claude Code) để xây một app thương mại điện tử bán rau củ quả xanh tươi hoàn chỉnh."
+---
+
+# Flutter Vibe Code — Xây app eCommerce **GreenShop** không cần biết lập trình
+
+> Khóa học biến người **chưa từng viết một dòng code** thành người tự tay xây được một ứng dụng bán hàng thật, chạy trên điện thoại thật — bằng cách **mô tả điều mình muốn cho AI**.
+
+## 1. Khóa học này dành cho ai?
+
+Khóa học được thiết kế riêng cho **người không có nền tảng lập trình**:
+
+- Chủ shop, người kinh doanh online muốn tự chủ công cụ bán hàng
+- Nhân viên marketing, content, vận hành muốn hiểu và làm được sản phẩm số
+- Designer, product owner muốn dựng nhanh bản mẫu (prototype) để thử ý tưởng
+- Bất kỳ ai tò mò: "Liệu tôi có thể tự làm được một cái app không?" — câu trả lời là **CÓ**.
+
+<Note>
+**Bạn KHÔNG cần biết:** ngôn ngữ lập trình, thuật ngữ kỹ thuật, toán cao cấp.
+
+**Bạn CHỈ cần:** biết dùng máy tính, gõ được tiếng Việt, và biết diễn đạt rõ điều mình muốn.
+</Note>
+
+## 2. Vibe Coding là gì?
+
+**Vibe Coding** là cách làm phần mềm mới: thay vì tự gõ từng dòng code, bạn **mô tả điều mình muốn bằng ngôn ngữ đời thường** cho một trợ lý AI (trong khóa này là **Claude Code**), AI viết code, bạn chạy thử và yêu cầu chỉnh sửa cho đến khi ưng ý.
+
+Hãy tưởng tượng bạn không phải là **thợ xây** phải tự trộn vữa, đặt gạch. Bạn là **kiến trúc sư kiêm chủ nhà**: bạn nói rõ mình muốn ngôi nhà thế nào, người thợ (AI) thi công, bạn nghiệm thu và yêu cầu sửa.
+
+### Vòng lặp cốt lõi của cả khóa học
+
+```text
+   ┌─────────────────────────────────────────────────┐
+   │                                                 │
+   ▼                                                 │
+① MÔ TẢ  ──►  ② AI LÀM  ──►  ③ CHẠY THỬ  ──►  ④ PHẢN HỒI
+(nói rõ       (viết code)    (bấm tận tay)    (khen/chê,
+ mình muốn                                     yêu cầu sửa)
+ gì)                                               │
+                                                   │
+                        lặp lại đến khi ưng ý ─────┘
+```
+
+## 3. Bạn sẽ xây được gì? — App **GreenShop**
+
+Xuyên suốt 10 buổi, cả lớp cùng xây **GreenShop** — một ứng dụng bán **rau củ quả xanh tươi** giao tận nhà, đầy đủ tính năng như các app thương mại điện tử thật:
+
+| Nhóm tính năng | Chi tiết |
+|---|---|
+| 🛒 **Mua sắm** | Trang chủ có banner, danh mục (rau ăn lá, củ quả, trái cây, rau organic...), lưới sản phẩm, tìm kiếm |
+| 📦 **Sản phẩm** | Trang chi tiết: ảnh, giá, mô tả, nguồn gốc, nút thêm vào giỏ |
+| 🧺 **Giỏ hàng** | Thêm/bớt số lượng, xóa, mã giảm giá, phí ship, tính tổng tiền |
+| 👤 **Tài khoản** | Đăng nhập Google/số điện thoại, sổ địa chỉ, danh sách yêu thích |
+| 💳 **Đặt hàng** | Luồng thanh toán, COD + thanh toán online (thử nghiệm), tạo đơn |
+| 📋 **Đơn hàng** | Lịch sử đơn, trạng thái đơn (chờ xác nhận → đang giao → hoàn thành) |
+| 🔔 **Thông báo** | Báo trạng thái đơn, khuyến mãi qua thông báo đẩy |
+| ☁️ **Quản lý** | Chủ shop tự cập nhật sản phẩm, giá, tồn kho — **không cần code** |
+
+**Thành quả cuối khóa:** một file cài đặt app mang thương hiệu của chính bạn, cài được lên điện thoại và gửi cho người thân dùng thử.
+
+## 4. Bạn sẽ học được 5 kỹ năng cốt lõi
+
+Khóa học **không dạy bạn viết code**. Khóa học rèn 5 kỹ năng của một **Vibe Coder** giỏi:
+
+1. **Mô tả** — Viết yêu cầu (prompt) rõ ràng, chia một tính năng lớn thành nhiều bước nhỏ để AI làm đúng ý.
+2. **Đọc hiểu cấu trúc** — Biết app gồm những màn hình nào, dữ liệu nằm ở đâu — đủ để "chỉ đường" cho AI, không cần hiểu từng dòng code.
+3. **Kiểm thử** — Chạy app, bấm thử mọi nút, phát hiện chỗ sai và mô tả lại cho AI một cách chính xác.
+4. **Kiểm soát phiên bản (Git)** — Dùng Git như nút **Save/Undo**: lưu mốc trước khi thử, quay lại khi hỏng. Đây là "dây an toàn" giúp bạn dám thử mọi thứ.
+5. **Ra quyết định sản phẩm** — AI làm được nhiều cách; **bạn** là người quyết định giao diện, tính năng và thứ tự ưu tiên dựa trên mục tiêu kinh doanh.
+
+## 5. Lộ trình 10 buổi
+
+| Buổi | Chủ đề | Cột mốc sản phẩm |
+|---|---|---|
+| **01** | Nhập môn Vibe Coding & cài đặt công cụ | Hiểu cách làm việc với AI, sẵn sàng môi trường |
+| **02** | App đầu tiên & Git an toàn | App GreenShop chạy trên máy, đổi được thương hiệu, biết lưu/khôi phục mốc |
+| **03** | Giao diện bằng lời — nền tảng | Mô tả được bố cục, dựng các khối giao diện cơ bản |
+| **04** | Trang chủ & danh sách sản phẩm | Trang chủ đẹp: banner, danh mục, lưới sản phẩm rau củ quả |
+| **05** | Điều hướng — khung app | 4 tab hoạt động, chuyển màn hình mượt, có nút quay lại |
+| **06** | Chi tiết sản phẩm & tìm kiếm | Xem chi tiết từng sản phẩm, tìm kiếm gõ đến đâu lọc đến đó |
+| **07** | Giỏ hàng & quy tắc nghiệp vụ | Giỏ hàng đầy đủ, mã giảm giá, phí ship theo quy tắc của shop |
+| **08** | Firebase — dữ liệu thật & quản lý kho | Sản phẩm lưu trên mây, tự quản lý kho hàng không cần code |
+| **09** | Đăng nhập & đặt hàng | Đăng nhập, luồng đặt hàng trọn vẹn, lịch sử & trạng thái đơn |
+| **10** | Thanh toán, thông báo, đóng gói & tốt nghiệp | Thanh toán thử, thông báo đẩy, đóng gói app + demo tốt nghiệp |
+
+## 6. Mỗi buổi học diễn ra thế nào?
+
+Mỗi buổi kéo dài **2 giờ** và gồm 3 phần, tương ứng 3 tài liệu:
+
+| Tài liệu | Nội dung | Mục đích |
+|---|---|---|
+| 📖 **Lý thuyết** (`lythuyet.md`) | Khái niệm, tư duy, kỹ thuật prompt, ví dụ minh họa | Hiểu "vì sao" và "cách nghĩ" |
+| 🛠️ **Thực hành** (`thuchanh.md`) | Bài lab làm ngay tại lớp, từng bước cụ thể | Bắt tay làm, có sản phẩm ngay |
+| 🏠 **Bài tập về nhà** (`baitap.md`) | Bài tập mở rộng, thử thách sáng tạo | Củng cố & chuẩn bị cho buổi sau |
+
+## 7. Công cụ sử dụng
+
+| Công cụ | Vai trò | Ví von cho người mới |
+|---|---|---|
+| **Flutter** | Bộ khung tạo app chạy trên cả iPhone và Android | "Bộ đồ nghề làm app" |
+| **VS Code** | Nơi bạn làm việc, gõ prompt cho AI | "Bàn làm việc" |
+| **Claude Code** | Trợ lý AI viết code theo mô tả của bạn | "Người thợ AI" |
+| **Firebase** | Kho dữ liệu trên mây (sản phẩm, đơn hàng, tài khoản) | "Google Sheets siêu cấp cho app" |
+| **Git** | Lưu và khôi phục các mốc làm việc | "Nút Save/Undo" |
+
+## 8. Ba lời hứa với học viên
+
+1. **Kết thúc khóa, bạn có một app thật** cầm trên tay, không phải bài tập bỏ đi.
+2. **Bạn tự vận hành được** cửa hàng của mình (cập nhật sản phẩm, giá, xử lý đơn) mà không cần lập trình viên.
+3. **Bạn có một bộ kỹ năng mới** — Vibe Coding — để tiếp tục tự làm những sản phẩm số khác sau này.
+
+## 9. Cam kết & tinh thần học
+
+> **Sai là chuyện bình thường.** Ngay cả lập trình viên chuyên nghiệp cũng phải sửa đi sửa lại nhiều lần. Mỗi vòng chỉnh sửa là một bước tiến. Với Git làm dây an toàn, bạn được phép thử mọi thứ mà không sợ làm hỏng.
+
+<Tip>
+**Nguyên tắc số 1 xuyên suốt khóa học:** Trước khi thử một điều gì lớn → **lưu mốc Git**. Đó là bí quyết giúp người không biết code vẫn tự tin xây được app hoàn chỉnh.
+</Tip>
+
+---
+
+Sẵn sàng chưa? Hãy bắt đầu với **Buổi 01 — Nhập môn Vibe Coding & cài đặt công cụ**.

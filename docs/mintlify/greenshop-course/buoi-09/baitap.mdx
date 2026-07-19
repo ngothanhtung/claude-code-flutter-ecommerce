@@ -1,0 +1,55 @@
+---
+title: "Buổi 09 — Bài tập về nhà: Hoàn thiện trải nghiệm đặt hàng"
+description: "Bổ sung tính năng cho luồng đặt hàng và trải nghiệm sau mua."
+---
+
+# Buổi 09 — Bài tập về nhà
+
+## Bài 1 — Chạy trọn luồng đặt hàng (bắt buộc)
+
+Tự đặt **3 đơn hàng thử** với các tình huống khác nhau:
+
+- Đơn 1: đơn nhỏ (dưới ngưỡng freeship) — kiểm tra có tính phí ship
+- Đơn 2: đơn lớn (trên ngưỡng freeship) + áp mã giảm giá
+- Đơn 3: đặt rồi tự hủy khi đang "Chờ xác nhận"
+
+Với mỗi đơn, vào Console đổi trạng thái và xem app cập nhật.
+
+## Bài 2 — "Đặt lại đơn này" (bắt buộc)
+
+```text
+Trong chi tiết đơn hàng, thêm nút "Đặt lại đơn này": đưa toàn bộ món của đơn
+cũ vào giỏ hàng để khách đặt nhanh lần nữa. Rất hợp với khách mua rau định kỳ.
+```
+
+## Bài 3 — Đánh giá sau khi nhận hàng (bắt buộc)
+
+```text
+Với đơn "Hoàn thành", cho khách đánh giá: chọn số sao và viết nhận xét cho
+từng sản phẩm. Đánh giá hiển thị ở trang chi tiết sản phẩm đó.
+```
+
+## Bài 4 — Theo dõi đơn trực quan (khuyến khích)
+
+```text
+Trong chi tiết đơn, thêm thanh tiến trình trực quan hiển thị đơn đang ở bước
+nào: Đã đặt → Đang chuẩn bị → Đang giao → Hoàn thành (dạng các chấm nối nhau,
+chấm đã qua tô xanh lá).
+```
+
+## Bài 5 — Kiểm tra bảo mật (khuyến khích)
+
+Nhờ AI giải thích và kiểm tra:
+
+```text
+Giải thích cho tôi: nếu một khách cố xem đơn hàng của khách khác thì điều gì
+xảy ra? Quy tắc bảo mật hiện tại có chặn được không? Nếu chưa, hãy sửa.
+```
+
+## Nộp bài
+
+- Đã chạy 3 đơn với các tình huống khác nhau.
+- Có nút "Đặt lại đơn này" và tính năng đánh giá.
+- Mốc Git đã lưu.
+
+> **Buổi tới (10) — BUỔI CUỐI:** Thanh toán online (thử nghiệm), thông báo đẩy, đóng gói app cài lên máy thật và **demo tốt nghiệp**! Chuẩn bị màn trình diễn sản phẩm của bạn.

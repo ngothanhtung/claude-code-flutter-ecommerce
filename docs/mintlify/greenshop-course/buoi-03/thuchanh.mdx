@@ -1,0 +1,94 @@
+---
+title: "Buổi 03 — Thực hành: Dựng các khối giao diện cơ bản"
+description: "Luyện mô tả bố cục và dựng thử các khối giao diện đầu tiên cho GreenShop."
+---
+
+# Buổi 03 — Thực hành: Dựng Khối Giao Diện Bằng Lời
+
+> Kết thúc buổi: bạn dựng được vài khối giao diện cơ bản (thẻ sản phẩm, hàng danh mục) và thành thạo kỹ thuật iterate.
+
+## Lab 3.1 — Dựng một "thẻ sản phẩm" rau củ
+
+Bắt đầu nhỏ với một thẻ sản phẩm duy nhất:
+
+```text
+[BỐI CẢNH] App GreenShop, tôi đang tập dựng giao diện.
+[YÊU CẦU]  Tạo một thẻ sản phẩm rau củ mẫu.
+[CHI TIẾT] - Ảnh vuông ở trên (dùng ảnh rau bất kỳ)
+           - Bên dưới: tên "Rau muống sạch", giá "12.000đ" màu xanh lá đậm
+           - Góc trên ảnh có nhãn nhỏ "Organic" bo tròn
+           - Cả thẻ bo góc mềm, có bóng đổ nhẹ
+[GIỚI HẠN] Chỉ làm một thẻ mẫu này để tôi xem thử.
+```
+
+Xem kết quả trên máy.
+
+## Lab 3.2 — Luyện iterate trên thẻ sản phẩm
+
+Chỉnh thẻ vừa làm bằng công thức "Giữ nguyên... chỉ đổi...". Thử tối thiểu 4 lần:
+
+```text
+Giữ nguyên mọi thứ, chỉ làm nhãn "Organic" màu xanh lá nền trắng chữ xanh.
+```
+
+```text
+Giữ nguyên, chỉ tăng khoảng cách giữa ảnh và phần chữ cho thoáng hơn.
+```
+
+```text
+Giữ nguyên, thêm dòng "Còn 20 bó" chữ nhỏ màu xám dưới giá.
+```
+
+```text
+Giữ nguyên, thêm một nút tròn dấu cộng ở góc dưới phải để thêm vào giỏ.
+```
+
+<Tip>
+Cảm nhận sự khác biệt: mỗi lần chỉ đổi một thứ nhỏ, thẻ mỗi lúc một đẹp hơn mà không mất công làm lại. Đây chính là nhịp làm việc của Vibe Coder.
+</Tip>
+
+## Lab 3.3 — Dựng một "hàng danh mục" cuộn ngang
+
+Thử một khối phức tạp hơn:
+
+```text
+[BỐI CẢNH] App GreenShop, màn hình trang chủ.
+[YÊU CẦU]  Tạo một hàng danh mục cuộn ngang.
+[CHI TIẾT] - 6 danh mục: Rau ăn lá, Củ quả, Trái cây, Rau gia vị, Nấm, Combo
+           - Mỗi danh mục là một icon tròn nhỏ + tên bên dưới
+           - Vuốt ngang để xem thêm
+[GIỚI HẠN] Chỉ làm hàng danh mục này.
+```
+
+Kiểm thử: vuốt ngang xem có cuộn mượt không.
+
+## Lab 3.4 — Thử mô tả từ ảnh tham khảo
+
+Lấy 1 trong 3 ảnh tham khảo (bài tập buổi 1). Đính kèm cho AI và yêu cầu:
+
+```text
+Dựng một khối giao diện có bố cục giống phần tôi khoanh trong ảnh này,
+nhưng nội dung là rau củ quả của cửa hàng tôi. Tông màu xanh lá.
+```
+
+So sánh: kết quả có giống ảnh không? Nếu lệch, dùng iterate để kéo về gần ảnh.
+
+## Lab 3.5 — Luyện xử lý 3 trạng thái
+
+Yêu cầu AI cho bạn thấy 3 trạng thái của một danh sách:
+
+```text
+Tạo một danh sách sản phẩm mẫu và cho tôi xem lần lượt 3 trạng thái của nó:
+khi đang tải (khung xương lấp lánh), khi có dữ liệu, và khi trống rỗng
+(hình minh họa + chữ "Chưa có sản phẩm nào").
+```
+
+## Checklist hoàn thành
+
+- [ ] Dựng được thẻ sản phẩm và chỉnh nó qua ít nhất 4 vòng iterate
+- [ ] Dựng được hàng danh mục cuộn ngang
+- [ ] Thử dựng giao diện từ một ảnh tham khảo
+- [ ] Nhìn thấy được 3 trạng thái của một danh sách
+- [ ] Đã lưu mốc Git "Xong luyện tập giao diện cơ bản"
+
+> Bạn giờ đã có "tay nghề" mô tả giao diện. Buổi sau sẽ ghép các khối này thành một trang chủ hoàn chỉnh!

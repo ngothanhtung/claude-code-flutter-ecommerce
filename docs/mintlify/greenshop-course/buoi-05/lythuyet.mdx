@@ -1,0 +1,125 @@
+---
+title: "Buổi 05 — Lý thuyết: Điều hướng & Khung app"
+description: "Hiểu tư duy luồng màn hình, cấu trúc 4 tab, drawer và cách di chuyển giữa các màn hình."
+---
+
+# Buổi 05 — Lý thuyết: Điều Hướng — Khung Của App
+
+## Mục tiêu buổi học
+
+- Hiểu tư duy **"app là các phòng nối bằng cửa"**
+- Biết vẽ **sơ đồ màn hình (user flow)** cho app của mình
+- Nắm cấu trúc điều hướng chuẩn của app bán hàng: **tab + đi sâu + quay lại**
+- Biết mô tả luồng di chuyển cho AI
+
+---
+
+## 1. Vì sao cần điều hướng?
+
+Đến giờ app của bạn mới có trang chủ. Nhưng một app bán hàng thật cần nhiều màn hình: giỏ hàng, tài khoản, chi tiết sản phẩm... và khách phải **di chuyển qua lại** giữa chúng dễ dàng.
+
+**Điều hướng** (navigation) chính là hệ thống "đường đi" trong app — quyết định bấm nút này thì đi đâu, bấm quay lại thì về đâu.
+
+## 2. Tư duy "app = các phòng, nút = các cửa"
+
+Cách dễ nhất để hình dung một app: nó giống một **ngôi nhà nhiều phòng**.
+
+- Mỗi **màn hình** = một căn phòng
+- Mỗi **nút bấm dẫn sang màn hình khác** = một cánh cửa
+- **Nút quay lại** = cửa để đi ngược ra
+
+```text
+        ┌──────────────┐
+        │  TRANG CHỦ   │
+        └──────┬───────┘
+               │ bấm vào sản phẩm
+               ▼
+        ┌──────────────┐
+        │ CHI TIẾT SP  │  ← có nút quay lại về Trang chủ
+        └──────────────┘
+```
+
+<Note>
+Trước khi nhờ AI dựng điều hướng, bạn nên **vẽ sơ đồ các phòng và cửa** ra giấy. Đây chính là bản thiết kế để mô tả cho AI.
+</Note>
+
+## 3. Cấu trúc điều hướng chuẩn của app bán hàng
+
+Hầu hết app eCommerce dùng chung một cấu trúc quen thuộc, gồm 2 kiểu di chuyển:
+
+### 3.1. Thanh tab dưới đáy (bottom tabs) — di chuyển ngang
+
+Bốn tab luôn hiện dưới đáy, bấm để nhảy nhanh giữa các khu vực chính:
+
+```text
+┌─────────────────────────────┐
+│                             │
+│      (nội dung màn hình)     │
+│                             │
+├─────────────────────────────┤
+│ 🏠      📑      🧺      👤   │
+│Trang chủ Danh mục Giỏ  Tài khoản│
+└─────────────────────────────┘
+```
+
+Đặc điểm: chuyển tab **không mất vị trí** — rời tab rồi quay lại vẫn thấy chỗ cũ.
+
+### 3.2. Đi sâu vào chi tiết (stack) — di chuyển dọc
+
+Từ một màn hình, bấm vào để "đi sâu hơn", rồi bấm quay lại để ra:
+
+```text
+Trang chủ → Chi tiết sản phẩm → Đánh giá sản phẩm
+   ◄──────────  ◄──────────  (nút quay lại)
+```
+
+### 3.3. Ngăn kéo (drawer) — menu phụ (tùy chọn)
+
+Menu trượt ra từ cạnh trái, chứa các mục ít dùng: Cài đặt, Giới thiệu, Liên hệ. Không bắt buộc, nhưng tiện cho các mục phụ.
+
+## 4. Ba điều người dùng luôn mong đợi ở điều hướng
+
+Khi kiểm thử, hãy đảm bảo:
+
+1. **Nút quay lại luôn hoạt động** — kể cả nút back vật lý trên Android.
+2. **Không mất vị trí cuộn** — vào chi tiết rồi quay lại, trang chủ vẫn ở đúng chỗ đã cuộn.
+3. **Đúng nội dung** — bấm sản phẩm A phải ra chi tiết A, không lẫn sang B.
+
+<Tip>
+Đây là 3 điều dễ bị lỗi nhất. Ghi nhớ để kiểm thử kỹ và báo AI sửa nếu sai.
+</Tip>
+
+## 5. Mô tả điều hướng cho AI như thế nào?
+
+Cách tốt nhất là mô tả **cả sơ đồ** một lần, để AI dựng nhất quán:
+
+```text
+App GreenShop có sơ đồ màn hình như sau:
+- 4 tab dưới đáy: Trang chủ, Danh mục, Giỏ hàng, Tài khoản
+- Từ Trang chủ: bấm một sản phẩm → mở trang Chi tiết sản phẩm (có nút quay lại)
+- Từ Danh mục: bấm một danh mục → danh sách sản phẩm thuộc danh mục đó
+- Icon giỏ hàng ở góc phải trên → nhảy đến tab Giỏ hàng
+Dựng khung điều hướng này. Chuyển tab không được mất vị trí đang cuộn.
+```
+
+## 6. Báo lỗi điều hướng theo công thức
+
+Khi điều hướng chạy sai, mô tả cho AI theo công thức 4 phần:
+
+> **"Tôi đang ở [màn hình], tôi bấm [nút], tôi mong đợi [kết quả đúng], nhưng thực tế [điều đang xảy ra]."**
+
+Ví dụ: *"Tôi đang ở Chi tiết sản phẩm, tôi bấm nút quay lại, tôi mong đợi về Trang chủ ở đúng chỗ đã cuộn, nhưng thực tế nó về đầu trang."*
+
+<Note>
+Mô tả lỗi rõ ràng còn quan trọng hơn cả việc viết code chuẩn. AI sửa nhanh hay chậm phụ thuộc vào bạn tả lỗi tốt tới đâu.
+</Note>
+
+---
+
+## Tóm tắt buổi học
+
+- Điều hướng = hệ thống "đường đi" giữa các màn hình.
+- Tư duy **"phòng và cửa"**: màn hình là phòng, nút là cửa, luôn có cửa quay ra.
+- Cấu trúc chuẩn: **4 tab dưới đáy** (di chuyển ngang) + **đi sâu vào chi tiết** (di chuyển dọc) + drawer tùy chọn.
+- Ba điều phải đúng: nút quay lại, giữ vị trí cuộn, đúng nội dung.
+- Mô tả cả sơ đồ cho AI; báo lỗi theo công thức 4 phần.

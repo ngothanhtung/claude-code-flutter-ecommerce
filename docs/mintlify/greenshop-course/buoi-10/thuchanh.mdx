@@ -1,0 +1,100 @@
+---
+title: "Buổi 10 — Thực hành: Thanh toán, thông báo & đóng gói app"
+description: "Tích hợp thanh toán sandbox, thông báo đẩy, đánh bóng app và đóng gói cài lên máy thật."
+---
+
+# Buổi 10 — Thực hành: Hoàn Thiện & Đóng Gói GreenShop
+
+> Kết thúc buổi: app có thanh toán thử, thông báo đẩy, được đánh bóng và **đóng gói thành file cài lên điện thoại thật**.
+
+## Lab 10.1 — Thanh toán online (sandbox)
+
+Lấy khóa sandbox từ cổng thanh toán (theo hướng dẫn giảng viên), rồi:
+
+```text
+Thêm thanh toán online chế độ sandbox (thử nghiệm) cho GreenShop, ngoài COD:
+- Ở bước xác nhận đơn: chọn "COD" hoặc "Thanh toán online (thử nghiệm)"
+- Chọn online: mở cổng thanh toán sandbox, dùng thẻ test do cổng cung cấp
+- Trả tiền thành công: đơn ghi "Đã thanh toán", vào màn hình cảm ơn
+- Trả tiền thất bại/hủy giữa chừng: quay lại giỏ, đơn KHÔNG được tạo,
+  báo "Thanh toán chưa hoàn tất"
+Hướng dẫn tôi lấy khóa sandbox trên trang cổng thanh toán, phần còn lại bạn làm.
+```
+
+Kiểm thử **cả 2 chiều**: một lần trả thành công, một lần hủy giữa chừng (kiểm tra đơn không bị tạo sai).
+
+## Lab 10.2 — Thông báo đẩy
+
+```text
+Thêm thông báo đẩy cho GreenShop:
+- Lần đầu mở app xin quyền nhận thông báo (giải thích lợi ích trước khi xin)
+- Khi trạng thái đơn đổi (Đang giao, Hoàn thành...) → gửi thông báo cho khách
+  "Đơn GS123456 của bạn đang được giao 🚚"
+- Bấm vào thông báo → mở thẳng chi tiết đơn đó
+- App đang mở, đang tắt, hay đã đóng hẳn đều nhận được
+- Thêm nút bật/tắt nhận thông báo khuyến mãi trong tab Tài khoản
+```
+
+Kiểm thử: đổi trạng thái đơn trên Console → điện thoại nhận thông báo → bấm vào mở đúng đơn.
+
+## Lab 10.3 — Đánh bóng app
+
+Chọn và áp dụng tối thiểu 4 hạng mục:
+
+```text
+Đánh bóng toàn bộ app cho chuyên nghiệp:
+- Ảnh sản phẩm hiện mờ dần khi tải xong, có ảnh chờ khi đang tải
+- Chuyển màn hình mượt, nút bấm phản hồi chạm (rung nhẹ khi thêm vào giỏ)
+- Chấm đỏ giỏ hàng nảy nhẹ khi tăng số lượng
+- Kéo xuống ở trang chủ để làm mới danh sách
+- Thống nhất bo góc, khoảng cách, cỡ chữ toàn app
+- Thêm màn hình chờ (splash) có logo khi mở app
+```
+
+## Lab 10.4 — Rà soát chất lượng tổng thể
+
+```text
+Đóng vai chuyên gia kiểm định app bán hàng. Rà soát toàn bộ GreenShop và liệt
+kê điểm chưa ổn theo 4 nhóm: lỗi chức năng, trải nghiệm khó chịu, thiếu phản
+hồi cho người dùng, rủi ro. Xếp theo ưu tiên, đề xuất cách sửa. Chưa sửa vội.
+```
+
+Chọn và sửa **5 điểm ưu tiên cao nhất**.
+
+## Lab 10.5 — Hoàn thiện nhận diện
+
+```text
+Chuẩn bị app để phát hành:
+- Dùng ảnh logo tôi cung cấp làm icon app cho mọi kích thước
+- Màn hình chờ nền màu xanh lá thương hiệu + logo giữa màn hình
+- Tên hiển thị dưới icon: "GreenShop"
+- Kiểm tra và bỏ hết dữ liệu/thông báo thử nghiệm còn sót
+```
+
+## Lab 10.6 — Đóng gói & cài lên máy thật
+
+```text
+Đóng gói app thành file cài đặt Android (APK) để tôi cài lên điện thoại thật
+và gửi cho bạn bè cài thử. Hướng dẫn tôi từng bước: chạy lệnh gì, file nằm ở
+đâu, chép sang điện thoại và cài như thế nào.
+```
+
+**Thành quả:** cầm file cài đặt app của chính bạn, cài lên điện thoại người thân ngay tại lớp!
+
+## Lab 10.7 — Lưu mốc cuối cùng
+
+```text
+Lưu mốc với ghi chú: "GreenShop hoàn thiện - bản phát hành đầu tiên".
+```
+
+## Checklist hoàn thành
+
+- [ ] Thanh toán sandbox chạy được cả thành công lẫn hủy
+- [ ] Thông báo đẩy hoạt động, bấm vào mở đúng đơn
+- [ ] Đã áp dụng tối thiểu 4 hạng mục đánh bóng
+- [ ] Đã rà soát chất lượng và sửa 5 điểm ưu tiên
+- [ ] Icon, splash, tên app hoàn chỉnh
+- [ ] Đóng gói được file APK và cài lên máy thật
+- [ ] Đã lưu mốc Git cuối
+
+> 🎉 Chúc mừng! Bạn vừa xây xong một app thương mại điện tử hoàn chỉnh. Giờ là lúc **demo tốt nghiệp** — xem phần bài tập.

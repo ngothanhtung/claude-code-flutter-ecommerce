@@ -1,0 +1,94 @@
+---
+title: "Buổi 07 — Thực hành: Xây giỏ hàng hoàn chỉnh"
+description: "Dựng giỏ hàng đầy đủ và áp dụng quy tắc nghiệp vụ của cửa hàng."
+---
+
+# Buổi 07 — Thực hành: Giỏ Hàng GreenShop
+
+> Kết thúc buổi: giỏ hàng hoạt động đầy đủ (thêm/bớt/xóa/tính tiền) với quy tắc giảm giá và phí ship của cửa hàng bạn.
+
+## Lab 7.1 — Giỏ hàng dùng chung toàn app
+
+```text
+[BỐI CẢNH] App GreenShop, xây giỏ hàng dùng chung toàn app.
+[YÊU CẦU]  Làm giỏ hàng đầy đủ.
+[CHI TIẾT] - Ở Chi tiết sản phẩm: chọn số lượng rồi bấm "Thêm vào giỏ"
+             → hiện thông báo "Đã thêm vào giỏ", chấm đỏ trên icon giỏ +1 ngay
+           - Tab Giỏ hàng: mỗi dòng có ảnh, tên, giá, nút -/+ số lượng, nút xóa
+           - Vuốt trái một dòng để xóa; số lượng về 0 thì hỏi "Xóa sản phẩm
+             khỏi giỏ?" trước khi xóa
+           - Cuối trang: Tạm tính, Giảm giá, Phí vận chuyển, TỔNG CỘNG
+             (chữ to, màu xanh lá)
+           - Giỏ trống: hình minh họa + nút "Mua sắm ngay" quay về Trang chủ
+           - Đóng app mở lại giỏ hàng vẫn còn nguyên
+```
+
+## Lab 7.2 — Kiểm thử hành vi "trí nhớ dùng chung"
+
+- [ ] Thêm sản phẩm ở trang chi tiết → chấm đỏ icon giỏ tăng ngay
+- [ ] Vào tab Giỏ hàng → thấy đúng sản phẩm vừa thêm
+- [ ] Tăng/giảm số lượng trong giỏ → tổng tiền đổi theo
+- [ ] Đóng app, mở lại → giỏ vẫn còn hàng
+
+## Lab 7.3 — Viết quy tắc nghiệp vụ của cửa hàng bạn
+
+Soạn quy tắc riêng (dựa trên phần lý thuyết + đặc thù cửa hàng bạn), rồi đưa cho AI:
+
+```text
+Áp dụng quy tắc tính tiền cho giỏ hàng của tôi:
+1. Phí ship: nội thành 15.000đ, ngoại thành/tỉnh khác 30.000đ
+2. Đơn từ 300.000đ: miễn phí ship
+3. Mã "GREEN10": giảm 10% tối đa 50.000đ, chỉ cho đơn từ 200.000đ
+4. Mã sai/chưa đủ điều kiện: báo lý do cụ thể ngay dưới ô nhập mã
+5. Mỗi đơn chỉ dùng 1 mã
+Hiển thị từng dòng rõ ràng trong phần tổng kết giỏ hàng.
+```
+
+<Tip>
+Đây là lúc thể hiện chất "chủ shop" của bạn. Thay các con số và mã trên bằng chính sách thật của cửa hàng bạn.
+</Tip>
+
+## Lab 7.4 — Ô nhập mã giảm giá
+
+```text
+Thêm ô nhập mã giảm giá trong giỏ hàng: gõ mã rồi bấm "Áp dụng". Mã đúng và
+đủ điều kiện thì hiện dòng "Giảm giá" và thông báo thành công màu xanh. Mã
+sai thì báo đỏ lý do cụ thể ("Mã không tồn tại" / "Đơn tối thiểu 200.000đ").
+```
+
+## Lab 7.5 — Thêm quy tắc đặc thù ngành rau
+
+Chọn ít nhất 1 quy tắc sáng tạo cho ngành rau củ và yêu cầu AI làm:
+
+```text
+Thêm quy tắc: đơn từ 250.000đ được tặng kèm 1 bó rau gia vị (hành/ngò),
+hiển thị dòng "Quà tặng: 1 bó rau gia vị" trong tổng kết giỏ hàng.
+```
+
+## Lab 7.6 — Bắt AI săn lỗi
+
+```text
+Với giỏ hàng vừa làm, liệt kê 10 tình huống oái oăm người dùng có thể gây ra.
+Với mỗi tình huống cho biết app đang xử lý thế nào, cái nào chưa ổn thì sửa.
+Chưa sửa những cái cần tôi quyết định, hãy hỏi tôi.
+```
+
+Đọc danh sách, tự bấm thử lại từng tình huống trên máy.
+
+## Lab 7.7 — Lưu mốc
+
+```text
+Lưu mốc với ghi chú: "Xong giỏ hàng + quy tắc giảm giá và phí ship".
+```
+
+## Checklist hoàn thành
+
+- [ ] Giỏ hàng thêm/bớt/xóa hoạt động, có xác nhận khi xóa
+- [ ] Tính đúng: tạm tính, giảm giá, phí ship, tổng cộng
+- [ ] Mã giảm giá áp dụng đúng, báo lỗi rõ ràng khi sai
+- [ ] Có ít nhất 1 quy tắc đặc thù ngành rau
+- [ ] Giỏ hàng được ghi nhớ khi đóng/mở app
+- [ ] Đã săn lỗi và bấm thử lại
+- [ ] Đã lưu mốc Git
+
+> Giỏ hàng xong nghĩa là app của bạn đã có thể "bán hàng" (trên lý thuyết). Buổi sau: đưa **dữ liệu thật lên mây** để bạn quản lý cửa hàng như thật!

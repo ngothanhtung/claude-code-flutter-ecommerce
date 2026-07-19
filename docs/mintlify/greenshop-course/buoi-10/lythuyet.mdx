@@ -1,0 +1,117 @@
+---
+title: "Buổi 10 — Lý thuyết: Thanh toán, Thông báo & Phát hành"
+description: "Hiểu cổng thanh toán, thông báo đẩy, cách đóng gói app và con đường đưa lên chợ ứng dụng."
+---
+
+# Buổi 10 — Lý thuyết: Hoàn Thiện & Phát Hành
+
+## Mục tiêu buổi học
+
+- Hiểu **cổng thanh toán** hoạt động thế nào (và vì sao dùng chế độ thử nghiệm)
+- Hiểu **thông báo đẩy** và cách nó chạm lại khách hàng
+- Biết "đánh bóng" app để trông chuyên nghiệp
+- Nắm con đường **đóng gói và phát hành** app
+
+---
+
+## 1. Cổng thanh toán — "quầy thu ngân của bên thứ ba"
+
+Khi khách trả tiền online, app **không tự xử lý tiền** (quá rủi ro và phức tạp). Thay vào đó, app chuyển khách sang một **cổng thanh toán** chuyên nghiệp (như VNPay, MoMo) — ví như "quầy thu ngân của bên thứ ba" — để trả tiền, rồi nhận lại kết quả.
+
+```text
+App GreenShop  ──►  Cổng thanh toán  ──►  Trả kết quả về app
+ (đơn hàng)         (khách trả tiền)      (thành công/thất bại)
+```
+
+### Vì sao dùng chế độ thử nghiệm (sandbox)?
+
+Trong khóa học, ta dùng **sandbox** — môi trường thử với "tiền giả" và "thẻ test". Lý do:
+
+- **An toàn:** không dùng tiền thật, không rủi ro
+- **Đủ để học:** trải nghiệm trọn vẹn luồng thanh toán
+- **Chuyển production sau:** khi kinh doanh thật, đăng ký doanh nghiệp với cổng để bật tiền thật
+
+<Warning>
+Quan trọng: sandbox là môi trường **thử nghiệm**. Tuyệt đối không dùng thẻ/tài khoản thật. Để bán hàng thật, bạn cần đăng ký doanh nghiệp với cổng thanh toán — đó là bước **sau khóa học**.
+</Warning>
+
+## 2. Thông báo đẩy — chạm lại khách hàng
+
+**Thông báo đẩy** (push notification) là tin nhắn app gửi đến điện thoại khách kể cả khi họ không mở app. Đây là công cụ marketing và chăm sóc khách cực mạnh.
+
+Dùng cho:
+- **Cập nhật đơn:** "Đơn GS123456 của bạn đang được giao 🚚"
+- **Khuyến mãi:** "Rau organic giảm 20% hôm nay!"
+- **Nhắc nhở:** "Rau tươi mới về, đặt ngay nhé!"
+
+### App phải nhận thông báo ở mọi trạng thái
+
+Thông báo phải đến được dù app đang mở, đang chạy nền, hay đã đóng hẳn. Và khi bấm vào thông báo, app mở đúng nơi liên quan (ví dụ: bấm thông báo đơn hàng → mở chi tiết đơn đó).
+
+<Tip>
+Xin quyền thông báo đúng cách: **giải thích lợi ích trước khi xin**. Thay vì hỏi khô khan, hãy nói "Bật thông báo để không bỏ lỡ cập nhật đơn hàng và ưu đãi rau tươi nhé!" — khách sẽ dễ đồng ý hơn.
+</Tip>
+
+## 3. "Đánh bóng" — biến app tập thành app thật
+
+Những chi tiết nhỏ tạo khác biệt lớn về cảm giác chuyên nghiệp:
+
+- Ảnh hiện **mờ dần** khi tải xong (không giật cục)
+- Nút bấm có **phản hồi chạm** (rung nhẹ khi thêm vào giỏ)
+- Chuyển màn hình **mượt mà**
+- **Kéo xuống để làm mới** danh sách
+- Thống nhất bo góc, khoảng cách, cỡ chữ toàn app
+- **Màn hình chờ (splash)** có logo khi mở app
+
+## 4. Rà soát chất lượng tổng thể — thói quen chuyên nghiệp
+
+Trước khi phát hành, luôn nhờ AI rà soát toàn diện:
+
+```text
+Đóng vai chuyên gia kiểm định app bán hàng. Rà soát toàn bộ GreenShop và
+liệt kê điểm chưa ổn theo 4 nhóm: lỗi chức năng, trải nghiệm khó chịu, thiếu
+phản hồi cho người dùng, rủi ro (mất dữ liệu/thanh toán/bảo mật). Xếp theo
+ưu tiên, đề xuất cách sửa. Chưa sửa vội, để tôi duyệt chọn.
+```
+
+## 5. Đóng gói app — từ dự án thành file cài đặt
+
+App đang chạy trên máy bạn qua công cụ lập trình. Để **cài lên điện thoại thật và chia sẻ**, cần "đóng gói" thành một file cài đặt:
+
+- **Android:** file `.apk` (hoặc `.aab` để lên chợ) — cài trực tiếp được, gửi cho bạn bè dễ dàng.
+- **iOS:** phức tạp hơn, cần tài khoản Apple Developer trả phí.
+
+AI làm phần đóng gói; bạn chỉ cần làm theo hướng dẫn chép file sang điện thoại và cài.
+
+## 6. Con đường lên chợ ứng dụng (tổng quan)
+
+Để app xuất hiện trên CH Play / App Store cho mọi người tải:
+
+| Việc | CH Play (Android) | App Store (iOS) |
+|---|---|---|
+| Phí tài khoản | ~25 USD (một lần) | 99 USD/năm |
+| Thời gian duyệt | Vài giờ – vài ngày | Vài ngày – 1 tuần |
+| Cần chuẩn bị | Icon, ảnh chụp màn hình, mô tả, chính sách bảo mật | Như trên + tài khoản Developer |
+
+<Note>
+Phần kỹ thuật đóng gói AI làm được. Phần còn lại chủ yếu là **thủ tục tài khoản và nội dung marketing** (mô tả app, ảnh quảng bá) — đúng thế mạnh của bạn. Đây là bước bạn hoàn toàn tự làm được sau khóa học.
+</Note>
+
+## 7. Sau khóa học — bạn đi tiếp thế nào?
+
+- **Trang quản trị đẹp hơn:** vibe-code một web quản lý thay cho thao tác Console thô
+- **Thanh toán thật:** đăng ký doanh nghiệp, chuyển sandbox → production
+- **Phát hành lên chợ:** hoàn tất tài khoản Developer + nội dung marketing
+- **Mở rộng:** tích điểm thành viên, mã QR, chat hỗ trợ, giao hàng định kỳ
+- **Nâng tay nghề Vibe Coder:** làm các sản phẩm số khác cho việc kinh doanh
+
+---
+
+## Tóm tắt buổi học
+
+- **Cổng thanh toán** = quầy thu ngân bên thứ ba; dùng **sandbox** (thử nghiệm) khi học.
+- **Thông báo đẩy** chạm lại khách: cập nhật đơn, khuyến mãi; nhận ở mọi trạng thái app.
+- **Đánh bóng** bằng chi tiết nhỏ (ảnh mờ dần, rung nhẹ, splash) tạo cảm giác chuyên nghiệp.
+- Luôn **rà soát chất lượng tổng thể** trước khi phát hành.
+- **Đóng gói** thành file cài đặt (Android dễ, iOS cần tài khoản trả phí).
+- Lên chợ ứng dụng = kỹ thuật (AI lo) + thủ tục & marketing (bạn lo).

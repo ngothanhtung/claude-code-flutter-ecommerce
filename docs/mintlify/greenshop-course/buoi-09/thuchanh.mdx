@@ -1,0 +1,96 @@
+---
+title: "Buổi 09 — Thực hành: Đăng nhập & luồng đặt hàng"
+description: "Thêm đăng nhập, xây luồng checkout trọn vẹn và quản lý trạng thái đơn hàng."
+---
+
+# Buổi 09 — Thực hành: Đăng Nhập & Đặt Hàng
+
+> Kết thúc buổi: khách đăng nhập được, đặt đơn trọn vẹn, xem lịch sử và bạn đổi được trạng thái đơn.
+
+## Lab 9.1 — Thêm đăng nhập
+
+Trước tiên, bật đăng nhập trên Firebase Console (theo hướng dẫn giảng viên: bật Google Sign-In và Phone Auth), rồi:
+
+```text
+Thêm đăng nhập cho GreenShop:
+- Màn hình đăng nhập: nút "Tiếp tục với Google" + đăng nhập bằng số điện thoại (OTP)
+- Chưa đăng nhập vẫn xem hàng và thêm giỏ bình thường
+- Chỉ khi bấm "Đặt hàng" mới yêu cầu đăng nhập
+- Sau đăng nhập: quay lại đúng chỗ đang đứng, giỏ hàng giữ nguyên
+- Tab Tài khoản: hiện ảnh + tên, nút Đăng xuất có hỏi xác nhận
+```
+
+Kiểm thử: đăng nhập Google, đăng xuất, đăng nhập lại.
+
+## Lab 9.2 — Sổ địa chỉ giao hàng
+
+```text
+Làm sổ địa chỉ trong tab Tài khoản:
+- Thêm địa chỉ mới: họ tên, số điện thoại, địa chỉ, ghi chú
+- Số điện thoại phải đúng 10 số bắt đầu bằng 0, sai thì báo ngay dưới ô nhập
+- Lưu được nhiều địa chỉ, chọn một địa chỉ làm mặc định
+- Sửa và xóa địa chỉ đã lưu
+- Địa chỉ lưu trên Firebase gắn với tài khoản
+```
+
+## Lab 9.3 — Luồng đặt hàng 3 bước
+
+```text
+Làm luồng đặt hàng, từ giỏ bấm "Đặt hàng" đi qua 3 bước:
+BƯỚC 1 — Địa chỉ: chọn địa chỉ đã lưu hoặc thêm mới
+BƯỚC 2 — Xác nhận: danh sách món + số lượng, địa chỉ đã chọn, các dòng tiền
+         như giỏ hàng, chọn cách thanh toán (tạm thời chỉ "Thanh toán khi
+         nhận hàng - COD")
+BƯỚC 3 — Hoàn tất:
+  - Tạo đơn vào Firebase: mã đơn (GS + 6 số), danh sách món, tiền, địa chỉ,
+    trạng thái "Chờ xác nhận", thời gian đặt
+  - Màn hình cảm ơn: hiện mã đơn + nút "Xem đơn hàng" và "Tiếp tục mua sắm"
+  - Giỏ hàng được dọn sạch
+```
+
+## Lab 9.4 — Lịch sử đơn & trạng thái
+
+```text
+Trong tab Tài khoản thêm "Đơn hàng của tôi":
+- Danh sách đơn mới nhất trước, mỗi đơn: mã, ngày, tổng tiền, trạng thái có màu
+  (Chờ xác nhận=cam, Đang giao=xanh dương, Hoàn thành=xanh lá, Đã hủy=xám)
+- Bấm vào xem chi tiết đơn
+- Đơn "Chờ xác nhận" cho phép hủy, hỏi xác nhận trước khi hủy
+- Tôi đổi trạng thái trên Firebase Console thì app khách cập nhật ngay
+```
+
+## Lab 9.5 — Vận hành đơn hàng (đóng vai chủ shop)
+
+Trải nghiệm quy trình xử lý đơn thật:
+
+1. Trên app: đặt một đơn thử (đăng nhập → thêm hàng → nhập địa chỉ → đặt COD)
+2. Trên Console: tìm đơn vừa tạo, đổi trạng thái sang "Đang giao"
+3. Nhìn app: đơn đổi màu và trạng thái ngay
+4. Trên Console: đổi tiếp sang "Hoàn thành"
+
+## Lab 9.6 — Siết bảo mật cơ bản
+
+```text
+Rà soát và siết quy tắc bảo mật Firebase theo 3 nguyên tắc: khách chỉ xem
+đơn của chính mình, khách không sửa được giá/trạng thái đơn, chỉ chủ shop
+sửa được sản phẩm. Giải thích cho tôi bằng ngôn ngữ thường những gì thay đổi.
+```
+
+## Lab 9.7 — Lưu mốc
+
+```text
+Lưu mốc với ghi chú: "Xong đăng nhập + luồng đặt hàng + lịch sử đơn".
+```
+
+## Checklist hoàn thành
+
+- [ ] Đăng nhập Google/SĐT hoạt động; chỉ bắt đăng nhập khi đặt hàng
+- [ ] Sổ địa chỉ thêm/sửa/xóa được, kiểm tra SĐT đúng định dạng
+- [ ] Luồng đặt hàng 3 bước hoàn chỉnh, tạo đơn có mã GS
+- [ ] Màn hình cảm ơn hiện đúng, giỏ hàng được dọn
+- [ ] Lịch sử đơn hiện đúng, trạng thái có màu
+- [ ] Đổi trạng thái trên Console → app cập nhật ngay
+- [ ] Đã siết bảo mật 3 nguyên tắc
+- [ ] Đã lưu mốc Git
+
+> App của bạn giờ nhận được đơn hàng thật! Buổi cuối: thêm **thanh toán online, thông báo đẩy** và **đóng gói app** để cài lên máy thật.
