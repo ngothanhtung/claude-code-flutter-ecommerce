@@ -17,6 +17,9 @@ final productProvider = Provider.family<Product?, String>(
 final categoryProductsProvider = Provider.family<List<Product>, String>(
   (ref, id) => ref.watch(catalogRepositoryProvider).byCategory(id),
 );
+final relatedProductsProvider = Provider.family<List<Product>, String>(
+  (ref, productId) => ref.watch(catalogRepositoryProvider).relatedTo(productId),
+);
 
 final catalogSearchProvider = NotifierProvider<CatalogSearchNotifier, String>(
   CatalogSearchNotifier.new,

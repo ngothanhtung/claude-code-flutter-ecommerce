@@ -217,6 +217,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('3 / 3'), findsOneWidget);
 
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('related-products-section')),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('You may also like'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('product-card-balance-mat')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('product-card-airflex-runner')),
+      findsNothing,
+    );
+
     await tester.tap(find.byKey(const ValueKey('header-cart-button')));
     await tester.pumpAndSettle();
 

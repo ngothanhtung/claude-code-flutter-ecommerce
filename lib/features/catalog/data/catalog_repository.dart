@@ -28,4 +28,18 @@ class CatalogRepository {
   List<Product> byCategory(String categoryId) => allProducts
       .where((product) => product.categoryId == categoryId)
       .toList(growable: false);
+
+  List<Product> relatedTo(String productId, {int limit = 4}) {
+    final product = findById(productId);
+    if (product == null || limit <= 0) return const [];
+
+    return allProducts
+        .where(
+          (candidate) =>
+              candidate.id != product.id &&
+              candidate.categoryId == product.categoryId,
+        )
+        .take(limit)
+        .toList(growable: false);
+  }
 }

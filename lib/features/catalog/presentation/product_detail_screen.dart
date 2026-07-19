@@ -5,7 +5,9 @@ import '../../../shared/currency.dart';
 import '../../cart/presentation/cart_providers.dart';
 import '../../cart/presentation/header_cart_button.dart';
 import '../../wishlist/presentation/wishlist_providers.dart';
+import '../data/product.dart';
 import 'catalog_providers.dart';
+import 'product_card.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   const ProductDetailScreen({super.key, required this.productId});
@@ -38,6 +40,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     final colors = Theme.of(context).colorScheme;
     final saved = ref.watch(wishlistProvider).contains(product.id);
     final images = product.galleryImages;
+    final relatedProducts = ref.watch(relatedProductsProvider(product.id));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product details'),
@@ -169,6 +172,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     ),
                   ],
                 ),
+                if (relatedProducts.isNotEmpty) ...[
+                  const SizedBox(height: 40),
+                  _RelatedProducts(products: relatedProducts),
+                ],
               ],
             ),
           ),
@@ -213,6 +220,49 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _RelatedProducts extends StatelessWidget {
+  const _RelatedProducts({required this.products});
+
+  final List<Product> products;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Column(
+      key: const ValueKey('related-products-section'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'You may also like',
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          'More picks from the same collection',
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 258,
+          child: ListView.separated(
+            key: const ValueKey('related-products-list'),
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: products.length,
+            separatorBuilder: (_, _) => const SizedBox(width: 12),
+            itemBuilder: (context, index) =>
+                ProductCard(product: products[index], width: 174),
+          ),
+        ),
+      ],
     );
   }
 }

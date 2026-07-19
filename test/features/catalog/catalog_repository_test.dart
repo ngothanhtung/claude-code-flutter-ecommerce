@@ -26,4 +26,14 @@ void main() {
     expect(repository.search('  AIRflex  ').single.id, 'airflex-runner');
     expect(repository.search('not-in-catalog'), isEmpty);
   });
+
+  test('related products share the category and exclude the current item', () {
+    final related = repository.relatedTo('airflex-runner');
+
+    expect(related, isNotEmpty);
+    expect(related.length, lessThanOrEqualTo(4));
+    expect(related.every((product) => product.categoryId == 'fitness'), isTrue);
+    expect(related.any((product) => product.id == 'airflex-runner'), isFalse);
+    expect(repository.relatedTo('not-in-catalog'), isEmpty);
+  });
 }
