@@ -49,21 +49,18 @@ const seedPromos = [
     'Comfort, styled better.',
     'Up to 40% off modern essentials.',
     Icons.checkroom_rounded,
-    Color(0xFF13795B),
   ),
   Promo(
     'MEMBERS ONLY',
     'Little upgrades, big joy.',
     'Earn double points on home picks.',
     Icons.chair_alt_rounded,
-    Color(0xFF7557A7),
   ),
   Promo(
     'FAST DELIVERY',
     'Fresh picks at your door.',
     'Free next-day shipping over \$80.',
     Icons.local_shipping_rounded,
-    Color(0xFFC45D2D),
   ),
 ];
 

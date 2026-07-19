@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tutorials/app/app.dart';
+import 'package:flutter_tutorials/app/store_theme_preset.dart';
 import 'package:flutter_tutorials/core/local_store.dart';
 import 'package:flutter_tutorials/core/providers.dart';
 import 'package:flutter_tutorials/features/account/presentation/account_tab.dart';
+import 'package:flutter_tutorials/features/account/presentation/store_theme_provider.dart';
 import 'package:flutter_tutorials/features/auth/data/auth_repository.dart';
 import 'package:flutter_tutorials/features/auth/presentation/login_screen.dart';
 import 'package:flutter_tutorials/features/auth/presentation/auth_providers.dart';
@@ -85,7 +87,9 @@ void main() {
     expect(container.read(ordersProvider).value, hasLength(1));
   });
 
-  testWidgets('account dark-mode toggle changes the app theme', (tester) async {
+  testWidgets('account changes the store palette and dark mode', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({});
     final store = LocalStore(await SharedPreferences.getInstance());
     final auth = InMemoryAuthRepository();
@@ -104,8 +108,37 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    final promoCard = tester.widget<Container>(
+      find.byKey(const ValueKey('promo-card-WEEKEND EDIT')),
+    );
+    final promoDecoration = promoCard.decoration! as BoxDecoration;
+    final promoGradient = promoDecoration.gradient! as LinearGradient;
+    final promoColors = Theme.of(
+      tester.element(find.byKey(const ValueKey('promo-card-WEEKEND EDIT'))),
+    ).colorScheme;
+    expect(promoGradient.colors, [promoColors.primary, promoColors.secondary]);
     await tester.tap(find.text('Account').last);
     await tester.pumpAndSettle();
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(AccountTab)),
+    );
+    expect(container.read(storeThemePresetProvider), StoreThemePreset.autoRed);
+
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('store-theme-selector')),
+    );
+    await tester.tap(find.byKey(const ValueKey('store-theme-selector')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('store-theme-autoRed')), findsOneWidget);
+    expect(find.text('Light'), findsNWidgets(3));
+    expect(find.text('Dark'), findsNWidgets(3));
+    await tester.tap(find.byKey(const ValueKey('store-theme-freshGreen')));
+    await tester.pumpAndSettle();
+    expect(
+      container.read(storeThemePresetProvider),
+      StoreThemePreset.freshGreen,
+    );
+
     await tester.ensureVisible(find.byKey(const ValueKey('theme-mode-switch')));
     await tester.tap(find.byKey(const ValueKey('theme-mode-switch')));
     await tester.pumpAndSettle();

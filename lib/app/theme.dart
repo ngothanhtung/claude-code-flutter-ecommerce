@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 
-const _seed = Color(0xFF1B5E4B);
+import 'store_theme_preset.dart';
 
-ThemeData buildStoreTheme(Brightness brightness) {
-  final colors = ColorScheme.fromSeed(seedColor: _seed, brightness: brightness);
+ThemeData buildStoreTheme(Brightness brightness, StoreThemePreset preset) {
+  final palette = preset.palette(brightness);
+  final generatedColors = ColorScheme.fromSeed(
+    seedColor: preset.seedColor,
+    brightness: brightness,
+    dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+  );
+  final colors = generatedColors.copyWith(
+    primary: palette.primary,
+    onPrimary: palette.onPrimary,
+    secondary: palette.secondary,
+    onSecondary: palette.onSecondary,
+    tertiary: palette.tertiary,
+    onTertiary: palette.onTertiary,
+    surface: palette.surface,
+    onSurface: palette.onSurface,
+    outline: palette.outline,
+  );
   final isDark = brightness == Brightness.dark;
   return ThemeData(
     useMaterial3: true,
     colorScheme: colors,
-    scaffoldBackgroundColor: isDark
-        ? const Color(0xFF111814)
-        : const Color(0xFFF5F1E8),
+    scaffoldBackgroundColor: palette.background,
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: isDark ? const Color(0xFF18211C) : colors.surface,
+      backgroundColor: isDark ? colors.surfaceContainer : colors.surface,
       indicatorColor: colors.primary.withValues(alpha: .14),
       labelTextStyle: WidgetStateProperty.resolveWith(
         (states) => TextStyle(

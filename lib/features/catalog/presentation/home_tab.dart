@@ -173,52 +173,62 @@ class _PromoCard extends StatelessWidget {
   const _PromoCard({required this.promo});
   final Promo promo;
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(22),
-    decoration: BoxDecoration(
-      color: promo.color,
-      borderRadius: BorderRadius.circular(28),
-    ),
-    child: Stack(
-      children: [
-        Positioned(
-          right: -26,
-          bottom: -36,
-          child: Icon(
-            promo.icon,
-            size: 168,
-            color: Colors.white.withValues(alpha: .12),
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      key: ValueKey('promo-card-${promo.badge}'),
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [colors.primary, colors.secondary],
+        ),
+        borderRadius: BorderRadius.circular(28),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: -26,
+            bottom: -36,
+            child: Icon(
+              promo.icon,
+              size: 168,
+              color: colors.onPrimary.withValues(alpha: .12),
+            ),
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              promo.badge,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                promo.badge,
+                style: TextStyle(
+                  color: colors.onPrimary,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1,
+                ),
               ),
-            ),
-            const Spacer(),
-            Text(
-              promo.title,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
+              const Spacer(),
+              Text(
+                promo.title,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: colors.onPrimary,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              promo.subtitle,
-              style: TextStyle(color: Colors.white.withValues(alpha: .82)),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
+              const SizedBox(height: 6),
+              Text(
+                promo.subtitle,
+                style: TextStyle(
+                  color: colors.onPrimary.withValues(alpha: .82),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _EmptySearch extends StatelessWidget {

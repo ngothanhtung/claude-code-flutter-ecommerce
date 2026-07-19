@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/main_tab_provider.dart';
+import '../../../app/store_theme_preset.dart';
 import '../../../shared/store_scaffold.dart';
 import '../../auth/presentation/auth_providers.dart';
 import '../../auth/presentation/login_screen.dart';
@@ -9,6 +10,7 @@ import '../../orders/presentation/order_history_screen.dart';
 import '../../orders/presentation/order_providers.dart';
 import '../../wishlist/presentation/wishlist_providers.dart';
 import '../../wishlist/presentation/wishlist_screen.dart';
+import 'store_theme_provider.dart';
 import 'theme_mode_provider.dart';
 
 class AccountTab extends ConsumerWidget {
@@ -20,6 +22,7 @@ class AccountTab extends ConsumerWidget {
     final orderCount = ref.watch(ordersProvider).value?.length ?? 0;
     final wishlistCount = ref.watch(wishlistProvider).length;
     final themeMode = ref.watch(themeModeProvider);
+    final storeTheme = ref.watch(storeThemePresetProvider);
     return StorePage(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -137,6 +140,28 @@ class AccountTab extends ConsumerWidget {
                       Navigator.pushNamed(context, WishlistScreen.routeName),
                 ),
                 const Divider(height: 1, indent: 64),
+                ListTile(
+                  key: const ValueKey('store-theme-selector'),
+                  leading: Icon(storeTheme.icon, color: colors.primary),
+                  title: const Text(
+                    'Store theme',
+                    style: TextStyle(fontWeight: FontWeight.w800),
+                  ),
+                  subtitle: Text(storeTheme.label),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _CompactPalettePreview(
+                        preset: storeTheme,
+                        brightness: Theme.of(context).brightness,
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.chevron_right_rounded),
+                    ],
+                  ),
+                  onTap: () => _showThemePicker(context, ref, storeTheme),
+                ),
+                const Divider(height: 1, indent: 64),
                 SwitchListTile(
                   key: const ValueKey('theme-mode-switch'),
                   secondary: Icon(
@@ -185,6 +210,252 @@ class AccountTab extends ConsumerWidget {
       ),
     );
   }
+}
+
+Future<void> _showThemePicker(
+  BuildContext context,
+  WidgetRef ref,
+  StoreThemePreset selected,
+) => showModalBottomSheet<void>(
+  context: context,
+  showDragHandle: true,
+  useSafeArea: true,
+  builder: (context) => SingleChildScrollView(
+    padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Choose a store theme',
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w900),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          'Preview each identity in light and dark mode.',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 16),
+        for (final preset in StoreThemePreset.values) ...[
+          _ThemePresetTile(
+            preset: preset,
+            selected: preset == selected,
+            onTap: () async {
+              await ref
+                  .read(storeThemePresetProvider.notifier)
+                  .setPreset(preset);
+              if (context.mounted) Navigator.pop(context);
+            },
+          ),
+          if (preset != StoreThemePreset.values.last)
+            const SizedBox(height: 10),
+        ],
+      ],
+    ),
+  ),
+);
+
+class _ThemePresetTile extends StatelessWidget {
+  const _ThemePresetTile({
+    required this.preset,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final StoreThemePreset preset;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Semantics(
+      selected: selected,
+      button: true,
+      child: Material(
+        color: selected
+            ? colors.primaryContainer
+            : colors.surfaceContainerLowest,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(
+            color: selected ? colors.primary : colors.outlineVariant,
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          key: ValueKey('store-theme-${preset.name}'),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            preset.palette(Brightness.light).primary,
+                            preset.palette(Brightness.light).secondary,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Icon(preset.icon, color: Colors.white),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            preset.label,
+                            style: const TextStyle(fontWeight: FontWeight.w900),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            preset.description,
+                            style: TextStyle(color: colors.onSurfaceVariant),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Icon(
+                      selected
+                          ? Icons.check_circle_rounded
+                          : Icons.circle_outlined,
+                      color: selected ? colors.primary : colors.outline,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ModePalettePreview(
+                        preset: preset,
+                        brightness: Brightness.light,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: _ModePalettePreview(
+                        preset: preset,
+                        brightness: Brightness.dark,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ModePalettePreview extends StatelessWidget {
+  const _ModePalettePreview({required this.preset, required this.brightness});
+
+  final StoreThemePreset preset;
+  final Brightness brightness;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = preset.palette(brightness);
+    final dark = brightness == Brightness.dark;
+    return Container(
+      height: 54,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: palette.background,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: palette.outline.withValues(alpha: .45)),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            dark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+            size: 16,
+            color: palette.onSurface,
+          ),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              dark ? 'Dark' : 'Light',
+              style: TextStyle(
+                color: palette.onSurface,
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+          _PaletteDot(color: palette.primary),
+          const SizedBox(width: 4),
+          _PaletteDot(color: palette.secondary),
+          const SizedBox(width: 4),
+          _PaletteDot(color: palette.tertiary),
+        ],
+      ),
+    );
+  }
+}
+
+class _CompactPalettePreview extends StatelessWidget {
+  const _CompactPalettePreview({
+    required this.preset,
+    required this.brightness,
+  });
+
+  final StoreThemePreset preset;
+  final Brightness brightness;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = preset.palette(brightness);
+    return Container(
+      width: 48,
+      height: 24,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        children: [
+          Expanded(child: ColoredBox(color: palette.primary)),
+          Expanded(child: ColoredBox(color: palette.secondary)),
+          Expanded(child: ColoredBox(color: palette.tertiary)),
+        ],
+      ),
+    );
+  }
+}
+
+class _PaletteDot extends StatelessWidget {
+  const _PaletteDot({required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 12,
+    height: 12,
+    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+  );
 }
 
 class _Stat extends StatelessWidget {
