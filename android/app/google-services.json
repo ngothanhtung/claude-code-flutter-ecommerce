@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1014130637454",
+    "project_id": "claude-code-flutter-ecommerce",
+    "storage_bucket": "claude-code-flutter-ecommerce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014130637454:android:fe6c49ca033d9abe51e7df",
+        "android_client_info": {
+          "package_name": "com.example.flutter_tutorials"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014130637454-166osr27bf15oe5o94v5md0itrjhl7th.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_tutorials",
+            "certificate_hash": "baafdeac61746e2c64c572fc6607ca29b47f58f7"
+          }
+        },
+        {
+          "client_id": "1014130637454-8hqf1jvl890auvuok8583cmi70t9ojhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB92VK7Ke2GQPwmGUhxQxdmIsHNDc6k6Mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014130637454-8hqf1jvl890auvuok8583cmi70t9ojhj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1014130637454-09io8l3epdhaeul02r0s1c6jg4nob1i0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterTutorials"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
