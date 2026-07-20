@@ -168,7 +168,7 @@ class _ReviewProductScreenState extends ConsumerState<ReviewProductScreen> {
                     key: const ValueKey('review-comment-field'),
                     controller: comment,
                     enabled: !saving,
-                    maxLength: 1000,
+                    maxLength: 500,
                     minLines: 5,
                     maxLines: 8,
                     textCapitalization: TextCapitalization.sentences,

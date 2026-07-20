@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
+import '../../../core/api_client.dart';
 import 'user_model.dart';
 
 sealed class AuthFailure implements Exception {
@@ -37,25 +35,27 @@ abstract interface class AuthRepository {
 
   Future<UserModel> login(String email, String password);
 
-  Future<UserModel> loginWithGoogle();
-
   Future<void> logout();
 }
 
-class FirebaseAuthRepository implements AuthRepository {
-  FirebaseAuthRepository({FirebaseAuth? auth, GoogleSignIn? googleSignIn})
-    : _auth = auth ?? FirebaseAuth.instance,
-      _googleSignIn = googleSignIn ?? GoogleSignIn.instance;
+class ApiAuthRepository implements AuthRepository {
+  ApiAuthRepository(this.api);
 
-  final FirebaseAuth _auth;
-  final GoogleSignIn _googleSignIn;
-  Future<void>? _googleInitialization;
+  final ApiClient api;
+  UserModel? _currentUser;
 
   @override
-  UserModel? get currentUser => _toUserModel(_auth.currentUser);
+  UserModel? get currentUser => _currentUser;
 
-  Future<void> _initializeGoogleSignIn() =>
-      _googleInitialization ??= _googleSignIn.initialize();
+  Future<UserModel?> restoreSession() async {
+    if (!api.hasSession) return null;
+    try {
+      return _currentUser = await _loadCurrentUser();
+    } on Object {
+      await api.clearSession();
+      return null;
+    }
+  }
 
   @override
   Future<UserModel> register({
@@ -64,115 +64,78 @@ class FirebaseAuthRepository implements AuthRepository {
     required String password,
   }) async {
     try {
-      final credential = await _auth.createUserWithEmailAndPassword(
-        email: email.trim().toLowerCase(),
-        password: password,
+      final data =
+          await api.post(
+                '/api/v1/auth/register',
+                body: {
+                  'name': name.trim(),
+                  'email': email.trim().toLowerCase(),
+                  'password': password,
+                },
+              )
+              as Map<String, dynamic>;
+      await api.saveTokens(data['tokens'] as Map<String, dynamic>);
+      return _currentUser = UserModel.fromJson(
+        data['user'] as Map<String, dynamic>,
       );
-      await credential.user?.updateDisplayName(name.trim());
-      await credential.user?.reload();
-      return _requireUser(_auth.currentUser ?? credential.user);
-    } on FirebaseAuthException catch (error) {
-      throw _mapFirebaseError(error);
+    } on ApiException catch (error) {
+      throw _mapApiError(error);
     }
   }
 
   @override
   Future<UserModel> login(String email, String password) async {
     try {
-      final credential = await _auth.signInWithEmailAndPassword(
-        email: email.trim().toLowerCase(),
-        password: password,
-      );
-      return _requireUser(credential.user);
-    } on FirebaseAuthException catch (error) {
-      throw _mapFirebaseError(error);
-    }
-  }
-
-  @override
-  Future<UserModel> loginWithGoogle() async {
-    try {
-      await _initializeGoogleSignIn();
-      final googleUser = await _googleSignIn.authenticate();
-      final googleAuth = googleUser.authentication;
-      final idToken = googleAuth.idToken;
-      if (idToken == null) {
-        throw const AuthOperationException(
-          'Google did not return a valid identity token.',
-        );
-      }
-      final credential = GoogleAuthProvider.credential(idToken: idToken);
-      final result = await _auth.signInWithCredential(credential);
-      return _requireUser(result.user);
-    } on GoogleSignInException catch (error) {
-      if (error.code == GoogleSignInExceptionCode.canceled) {
-        throw const AuthCancelledException();
-      }
-      throw AuthOperationException(
-        error.description ?? 'Unable to sign in with Google.',
-      );
-    } on FirebaseAuthException catch (error) {
-      throw _mapFirebaseError(error);
+      final tokens =
+          await api.post(
+                '/api/v1/auth/login',
+                body: {
+                  'email': email.trim().toLowerCase(),
+                  'password': password,
+                },
+              )
+              as Map<String, dynamic>;
+      await api.saveTokens(tokens);
+      return _currentUser = await _loadCurrentUser();
+    } on ApiException catch (error) {
+      throw _mapApiError(error);
     }
   }
 
   @override
   Future<void> logout() async {
-    await _auth.signOut();
+    final refreshToken = api.refreshToken;
     try {
-      await _initializeGoogleSignIn();
-      await _googleSignIn.signOut();
-    } on GoogleSignInException {
-      // Firebase is already signed out; stale Google state can be retried later.
+      if (refreshToken != null) {
+        await api.post(
+          '/api/v1/auth/logout',
+          authenticated: true,
+          body: {'refresh_token': refreshToken},
+        );
+      }
+    } on Object {
+      // Local logout must still succeed when the server is unavailable.
+    } finally {
+      _currentUser = null;
+      await api.clearSession();
     }
   }
 
-  UserModel _requireUser(User? user) {
-    final model = _toUserModel(user);
-    if (model == null) {
-      throw const AuthOperationException('Authentication returned no user.');
-    }
-    return model;
+  Future<UserModel> _loadCurrentUser() async {
+    final data =
+        await api.get('/api/v1/users/me', authenticated: true)
+            as Map<String, dynamic>;
+    return UserModel.fromJson(data);
   }
 
-  UserModel? _toUserModel(User? user) {
-    if (user == null) return null;
-    final email = user.email ?? '';
-    final fallbackName = email.isEmpty
-        ? 'Everyday member'
-        : email.split('@').first;
-    return UserModel(
-      id: user.uid,
-      name: user.displayName?.trim().isNotEmpty == true
-          ? user.displayName!.trim()
-          : fallbackName,
-      email: email,
-      photoUrl: user.photoURL,
-    );
-  }
-
-  AuthFailure _mapFirebaseError(FirebaseAuthException error) {
+  AuthFailure _mapApiError(ApiException error) {
     return switch (error.code) {
-      'email-already-in-use' => const DuplicateEmailException(),
-      'invalid-credential' ||
-      'invalid-email' ||
-      'user-disabled' ||
-      'user-not-found' ||
-      'wrong-password' => const InvalidCredentialsException(),
-      'weak-password' => const AuthOperationException(
-        'Use a stronger password with at least 6 characters.',
-      ),
-      'network-request-failed' => const AuthOperationException(
-        'Check your internet connection and try again.',
-      ),
-      'too-many-requests' => const AuthOperationException(
-        'Too many attempts. Please wait a moment and try again.',
-      ),
-      'operation-not-allowed' => const AuthOperationException(
-        'This sign-in method is not enabled in Firebase.',
-      ),
+      4013 => const DuplicateEmailException(),
+      4010 => const InvalidCredentialsException(),
       _ => AuthOperationException(
-        error.message ?? 'Authentication failed. Please try again.',
+        error.statusCode == null
+            ? 'Cannot connect to the API. Check that go-tutorials is running.'
+            : error.message,
       ),
     };
   }
@@ -220,13 +183,6 @@ class InMemoryAuthRepository implements AuthRepository {
       id: normalized,
       name: account.name,
       email: normalized,
-    );
-  }
-
-  @override
-  Future<UserModel> loginWithGoogle() async {
-    throw const AuthOperationException(
-      'Google Sign-In is unavailable in preview mode.',
     );
   }
 

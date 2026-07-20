@@ -276,7 +276,7 @@ void main() {
     );
     await tester.enterText(
       find.byKey(const ValueKey('password-field')),
-      'secret1',
+      'secret123',
     );
     await tester.ensureVisible(
       find.byKey(const ValueKey('register-primary-button')),

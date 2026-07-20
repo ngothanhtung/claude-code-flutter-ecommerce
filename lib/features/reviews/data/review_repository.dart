@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../../../core/api_client.dart';
 import 'product_review.dart';
 
 abstract interface class ReviewRepository {
@@ -11,45 +10,31 @@ abstract interface class ReviewRepository {
   Future<void> saveReview(ProductReview review);
 }
 
-class FirestoreReviewRepository implements ReviewRepository {
-  FirestoreReviewRepository([FirebaseFirestore? firestore])
-    : _firestore = firestore ?? FirebaseFirestore.instance;
+class ApiReviewRepository implements ReviewRepository {
+  ApiReviewRepository(this.api);
 
-  final FirebaseFirestore _firestore;
-
-  DocumentReference<Map<String, dynamic>> _reviewReference(
-    String productId,
-    String userId,
-  ) => _firestore
-      .collection('products')
-      .doc(productId)
-      .collection('reviews')
-      .doc(userId);
+  final ApiClient api;
 
   @override
   Future<ProductReview?> findUserReview({
     required String productId,
     required String userId,
   }) async {
-    final snapshot = await _reviewReference(productId, userId).get();
-    return ProductReview.tryFromMap(snapshot.data());
+    final data = await api.get(
+      '/api/v1/products/$productId/reviews/me',
+      authenticated: true,
+    );
+    return data is Map<String, dynamic>
+        ? ProductReview.tryFromMap(data, fallbackUserId: userId)
+        : null;
   }
 
   @override
   Future<void> saveReview(ProductReview review) async {
-    final reference = _reviewReference(review.productId, review.userId);
-    final existing = await reference.get();
-    final data = <String, Object?>{
-      'userId': review.userId,
-      'userName': review.userName,
-      'userEmail': review.userEmail,
-      'productId': review.productId,
-      'orderId': review.orderId,
-      'rating': review.rating,
-      'comment': review.comment.trim(),
-      'updatedAt': FieldValue.serverTimestamp(),
-      if (!existing.exists) 'createdAt': FieldValue.serverTimestamp(),
-    };
-    await reference.set(data, SetOptions(merge: true));
+    await api.put(
+      '/api/v1/products/${review.productId}/reviews/me',
+      authenticated: true,
+      body: {'rating': review.rating, 'comment': review.comment.trim()},
+    );
   }
 }

@@ -1,25 +1,28 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/app.dart';
+import 'core/api_client.dart';
 import 'core/local_store.dart';
 import 'core/providers.dart';
 import 'features/auth/data/auth_repository.dart';
 import 'features/auth/presentation/auth_providers.dart';
 import 'features/auth/presentation/login_screen.dart';
+import 'features/catalog/data/catalog_repository.dart';
+import 'features/catalog/presentation/catalog_providers.dart';
 import 'features/orders/data/order_repository.dart';
 import 'features/orders/presentation/order_providers.dart';
-import 'firebase_options.dart';
 import 'features/main_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final preferences = await SharedPreferences.getInstance();
   final store = LocalStore(preferences);
-  final authRepository = FirebaseAuthRepository();
+  final api = ApiClient(preferences);
+  final authRepository = ApiAuthRepository(api);
+  await authRepository.restoreSession();
+  final catalogRepository = await CatalogRepository.fromApi(api);
   final initialRoute = authRepository.currentUser == null
       ? LoginScreen.routeName
       : MainScreen.routeName;
@@ -27,7 +30,9 @@ Future<void> main() async {
     ProviderScope(
       overrides: [
         localStoreProvider.overrideWithValue(store),
+        apiClientProvider.overrideWithValue(api),
         authRepositoryProvider.overrideWithValue(authRepository),
+        catalogRepositoryProvider.overrideWithValue(catalogRepository),
       ],
       child: EverydayStoreApp(initialRoute: initialRoute),
     ),
@@ -54,10 +59,12 @@ class _MyAppState extends State<MyApp> {
         return const MaterialApp(home: SizedBox.shrink());
       }
       final store = LocalStore(snapshot.requireData);
+      final api = ApiClient(snapshot.requireData);
       final authRepository = InMemoryAuthRepository();
       return ProviderScope(
         overrides: [
           localStoreProvider.overrideWithValue(store),
+          apiClientProvider.overrideWithValue(api),
           authRepositoryProvider.overrideWithValue(authRepository),
           orderRepositoryProvider.overrideWithValue(InMemoryOrderRepository()),
         ],

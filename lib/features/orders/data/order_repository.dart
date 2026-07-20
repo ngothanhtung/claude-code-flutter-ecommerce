@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../../../core/api_client.dart';
 import '../../../core/local_store.dart';
 import 'order.dart';
 
@@ -11,29 +10,38 @@ abstract interface class OrderRepository {
   Future<void> add(StoreOrder order);
 }
 
-class FirestoreOrderRepository implements OrderRepository {
-  FirestoreOrderRepository([FirebaseFirestore? firestore])
-    : _firestore = firestore ?? FirebaseFirestore.instance;
+class ApiOrderRepository implements OrderRepository {
+  ApiOrderRepository(this.api);
 
-  final FirebaseFirestore _firestore;
-
-  @override
-  Stream<List<StoreOrder>> watchForUser(String userId) => _firestore
-      .collection('orders')
-      .where('userId', isEqualTo: userId)
-      .snapshots()
-      .map((snapshot) {
-        final orders = snapshot.docs
-            .map((document) => StoreOrder.tryFromJson(document.data()))
-            .whereType<StoreOrder>()
-            .toList();
-        orders.sort((a, b) => b.date.compareTo(a.date));
-        return orders;
-      });
+  final ApiClient api;
+  final StreamController<void> _changes = StreamController<void>.broadcast();
 
   @override
-  Future<void> add(StoreOrder order) =>
-      _firestore.collection('orders').doc(order.id).set(order.toFirestore());
+  Stream<List<StoreOrder>> watchForUser(String userId) async* {
+    yield await _load(userId);
+    await for (final _ in _changes.stream) {
+      yield await _load(userId);
+    }
+  }
+
+  Future<List<StoreOrder>> _load(String userId) async {
+    final data = await api.get('/api/v1/orders', authenticated: true) as List;
+    return data
+        .whereType<Map<String, dynamic>>()
+        .map((json) => StoreOrder.tryFromJson(json, fallbackUserId: userId))
+        .whereType<StoreOrder>()
+        .toList(growable: false);
+  }
+
+  @override
+  Future<void> add(StoreOrder order) async {
+    await api.post(
+      '/api/v1/orders',
+      authenticated: true,
+      body: order.toApiCreate(),
+    );
+    _changes.add(null);
+  }
 }
 
 /// Used by widget tests and the tutorial compatibility wrapper only.

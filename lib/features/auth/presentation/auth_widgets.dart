@@ -14,7 +14,7 @@ class AuthPage extends StatelessWidget {
     required this.onPrimary,
     required this.onSecondary,
     required this.formKey,
-    required this.onGoogle,
+    this.onGoogle,
     this.busy = false,
   });
   final String prefix;
@@ -108,44 +108,13 @@ class AuthPage extends StatelessWidget {
                                     )
                                   : Text(primaryLabel),
                             ),
-                            const SizedBox(height: 16),
-                            Row(
-                              children: [
-                                const Expanded(child: Divider()),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                  ),
-                                  child: Text(
-                                    'OR',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(
-                                          color: colors.onSurfaceVariant,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                  ),
-                                ),
-                                const Expanded(child: Divider()),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            OutlinedButton.icon(
-                              key: ValueKey('$prefix-google-button'),
-                              onPressed: busy ? null : onGoogle,
-                              style: OutlinedButton.styleFrom(
-                                minimumSize: const Size.fromHeight(54),
+                            if (onGoogle != null) ...[
+                              const SizedBox(height: 16),
+                              OutlinedButton(
+                                onPressed: busy ? null : onGoogle,
+                                child: const Text('Continue with provider'),
                               ),
-                              icon: const Text(
-                                'G',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              label: const Text('Continue with Google'),
-                            ),
+                            ],
                             const SizedBox(height: 7),
                             TextButton(
                               key: ValueKey('$prefix-secondary-button'),
@@ -209,6 +178,6 @@ String? validateEmail(String? value) {
 String? validatePassword(String? value) {
   final text = value ?? '';
   if (text.isEmpty) return 'Password is required';
-  if (text.length < 6) return 'Use at least 6 characters';
+  if (text.length < 8) return 'Use at least 8 characters';
   return null;
 }

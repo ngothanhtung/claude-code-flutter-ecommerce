@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-"Everyday Store" is a Flutter e-commerce portfolio app with a searchable seeded catalog, cart/wishlist, simulated checkout, order history, notifications, persisted theme, and Material 3 chrome. Most features are offline via `shared_preferences` + `LocalStore`, but authentication and orders are backed by Firebase (`firebase_auth`, `cloud_firestore`) behind swappable repository interfaces.
+"Everyday Store" is a Flutter e-commerce client for the REST service in `../go-tutorials`. Auth uses access/refresh JWTs; catalog, orders, and reviews come from the API. Cart, wishlist, notifications, and theme preferences remain local.
 
 ## Commands
 
@@ -22,15 +22,15 @@ flutter test test/features/cart          # run one feature's tests by directory
 
 ## Architecture
 
-Feature-first under `lib/features/<feature>/{data,presentation}`. Dependencies flow one way: **widgets → Riverpod providers/notifiers → repositories → `LocalStore` / Firebase / in-memory store**. Presentation code must not touch `SharedPreferences`, `LocalStore`, `firebase_auth`, or `cloud_firestore` directly.
+Feature-first under `lib/features/<feature>/{data,presentation}`. Dependencies flow one way: **widgets → Riverpod providers/notifiers → repositories → `ApiClient` / `LocalStore` / in-memory store**. Presentation code must not touch `SharedPreferences` or raw HTTP directly.
 
-- `lib/main.dart` initializes Firebase and `SharedPreferences`, builds a `LocalStore`, picks `FirebaseAuthRepository`, and routes to `LoginScreen` or `MainScreen`. The `MyApp` wrapper further down is a compatibility shim for tutorial embedders and runs `InMemoryAuthRepository` + `InMemoryOrderRepository` against mock prefs.
-- `lib/core/local_store.dart` is the defensive JSON boundary around `SharedPreferences`; malformed payloads fall back silently to the supplied default. Every feature repository should go through it (or a Firebase-backed analog), never `SharedPreferences` directly.
-- `lib/core/providers.dart` exposes only `localStoreProvider`, which is overridden at bootstrap. Do not add new top-level providers there.
+- `lib/main.dart` creates `ApiClient`, restores a JWT session, loads the catalog, and routes to `LoginScreen` or `MainScreen`. `MyApp` remains an offline compatibility shim for widget tests.
+- `lib/core/api_client.dart` owns the API base URL, JSON envelope parsing, bearer token injection, and refresh-token rotation.
+- `lib/core/local_store.dart` is the defensive JSON boundary around `SharedPreferences`; malformed payloads fall back to defaults.
 - `lib/app/app.dart` owns named routes + `onGenerateRoute`. Static routes go in the `routes` map; parameterised routes (`ProductDetailScreen`, `CategoryProductsScreen`, `OrderSuccessScreen`, `OrderDetailScreen`, `ReviewProductScreen`) are matched by `settings.name` and `settings.arguments` (note: `ReviewProductScreen` expects a `ReviewScreenArgs` object, the rest expect a String id).
 - `lib/app/theme.dart` + `lib/app/store_theme_preset.dart` build Material 3 themes from the active `StoreThemePreset` (see Theme section).
 - `lib/shared/` holds `StoreScaffold` (responsive store chrome) and the currency formatter.
-- Catalog (`lib/features/catalog/data/seed_data.dart`) is immutable. Cart and wishlist persist product IDs + quantities; orders persist product snapshots so they survive catalog changes. Notifications are seeded at first launch and supplemented by order events.
+- The production catalog is loaded from `/api/v1/catalog`; `seed_data.dart` is retained only for tests/preview. Cart and wishlist persist product IDs + quantities locally.
 - `MainScreen` mounts the selected tab and listens to `cartTotalQuantityProvider`, `unreadNotificationsProvider`, and `mainTabProvider` via `ProviderSubscription` so badge counts survive `TickerMode` pauses during route transitions.
 
 ### Repository swap pattern
@@ -39,12 +39,12 @@ Cross-cutting features declare an interface in `data/` and ship two implementati
 
 | Interface | Production | Test/preview |
 | --- | --- | --- |
-| `AuthRepository` | `FirebaseAuthRepository` (`firebase_auth` + `google_sign_in`) | `InMemoryAuthRepository` |
-| `OrderRepository` | `FirestoreOrderRepository` (`cloud_firestore` collection `orders`) | `InMemoryOrderRepository` |
+| `AuthRepository` | `ApiAuthRepository` | `InMemoryAuthRepository` |
+| `OrderRepository` | `ApiOrderRepository` | `InMemoryOrderRepository` |
 
-The provider in `presentation/auth_providers.dart` / `order_providers.dart` returns the interface, and `main.dart` (or the `MyApp` shim / tests) overrides it via `ProviderScope.overrides`. New repositories should follow this pattern — define the interface, default to the Firebase implementation in the provider, override in tests with an in-memory variant.
+The provider in `presentation/auth_providers.dart` / `order_providers.dart` returns the interface, and tests override it via `ProviderScope.overrides`.
 
-`LegacyLocalOrderStore` still reads the old `orders` JSON from `SharedPreferences` so previously-installed local users keep their history after upgrading to Firebase.
+`LegacyLocalOrderStore` reads the old local `orders` JSON for one-time migration to the API.
 
 ### Theme
 
@@ -52,15 +52,15 @@ The provider in `presentation/auth_providers.dart` / `order_providers.dart` retu
 
 ### Storage keys (LocalStore)
 
-`users`, `session`, `cart`, `orders` (legacy), `wishlist`, `notifications`, `theme_mode`, `store_theme_preset`. Firebase collection: `orders` (documents keyed by order id, queried by `userId`).
+`cart`, `orders` (legacy), `wishlist`, `notifications`, `theme_mode`, `store_theme_preset`, `api_access_token`, `api_refresh_token`.
 
 ## Testing conventions
 
 - Tests mirror the lib tree under `test/`, e.g. `test/features/orders/order_repository_test.dart`.
 - Persistence is isolated via `SharedPreferences.setMockInitialValues({...})`; instantiate `LocalStore(await SharedPreferences.getInstance())` inside each test that needs it.
-- Firebase-backed features are exercised through their `InMemory*` doubles (`InMemoryAuthRepository`, `InMemoryOrderRepository`). Override the provider under test with `ProviderContainer(overrides: [...])` or `ProviderScope`.
+- API-backed features are exercised through their `InMemory*` doubles. Override providers under test with `ProviderContainer(overrides: [...])` or `ProviderScope`.
 - Preserve these keys when editing UI so widget tests keep finding them: auth flow keys `<prefix>-primary-button`, `<prefix>-secondary-button`, `name-field`, `email-field`, `password-field`; commerce flow keys `product-card-<id>`, `wishlist-<id>`, `add-to-cart-button`, `cart-badge`, `checkout-button`, `place-order-button`, `theme-mode-switch`, `logout-button`.
 
 ## Demo credentials
 
-The `InMemoryAuthRepository` ships with `admin@claude.ai` / `147258369` and account name `Tony Nguyen`. The `FirebaseAuthRepository` does not use these — Firebase auth needs a real provider configured in `lib/firebase_options.dart` and `firebase.json`. Plaintext passwords are demo-only.
+The API development admin is `admin@go-tutorials.local` / `Admin@123456`. `InMemoryAuthRepository` retains its separate credentials for automated tests only.

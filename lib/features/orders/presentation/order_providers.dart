@@ -9,7 +9,7 @@ import '../data/order.dart';
 import '../data/order_repository.dart';
 
 final orderRepositoryProvider = Provider<OrderRepository>(
-  (ref) => FirestoreOrderRepository(),
+  (ref) => ApiOrderRepository(ref.watch(apiClientProvider)),
 );
 
 final legacyLocalOrderStoreProvider = Provider(

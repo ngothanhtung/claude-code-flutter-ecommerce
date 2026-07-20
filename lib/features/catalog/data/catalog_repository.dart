@@ -1,14 +1,42 @@
+import '../../../core/api_client.dart';
 import 'category.dart';
 import 'product.dart';
 import 'promo.dart';
 import 'seed_data.dart';
 
 class CatalogRepository {
-  const CatalogRepository();
+  const CatalogRepository({
+    this.allProducts = seedProducts,
+    this.categories = seedCategories,
+    this.promos = seedPromos,
+  });
 
-  List<Product> get allProducts => seedProducts;
-  List<Category> get categories => seedCategories;
-  List<Promo> get promos => seedPromos;
+  final List<Product> allProducts;
+  final List<Category> categories;
+  final List<Promo> promos;
+
+  static Future<CatalogRepository> fromApi(ApiClient api) async {
+    final results = await Future.wait([
+      api.get('/api/v1/catalog/products?page_size=100'),
+      api.get('/api/v1/catalog/categories'),
+      api.get('/api/v1/catalog/promos'),
+    ]);
+    final productsPayload = results[0] as Map<String, dynamic>;
+    return CatalogRepository(
+      allProducts: (productsPayload['items'] as List)
+          .cast<Map<String, dynamic>>()
+          .map(Product.fromJson)
+          .toList(growable: false),
+      categories: (results[1] as List)
+          .cast<Map<String, dynamic>>()
+          .map(Category.fromJson)
+          .toList(growable: false),
+      promos: (results[2] as List)
+          .cast<Map<String, dynamic>>()
+          .map(Promo.fromJson)
+          .toList(growable: false),
+    );
+  }
 
   Product? findById(String id) {
     for (final product in allProducts) {

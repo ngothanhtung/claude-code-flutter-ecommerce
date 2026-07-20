@@ -47,25 +47,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
-  Future<void> signInWithGoogle() async {
-    setState(() => busy = true);
-    try {
-      await ref.read(currentUserProvider.notifier).loginWithGoogle();
-      if (!mounted) return;
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainScreen.routeName,
-        (_) => false,
-      );
-    } on AuthCancelledException {
-      // Closing the account picker is not an error the user needs to dismiss.
-    } on AuthFailure catch (error) {
-      _showError(error.message);
-    } finally {
-      if (mounted) setState(() => busy = false);
-    }
-  }
-
   void _showError(String message) {
     if (!mounted) return;
     ScaffoldMessenger.of(
@@ -83,7 +64,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     secondaryLabel: 'Create account',
     busy: busy,
     onPrimary: submit,
-    onGoogle: signInWithGoogle,
     onSecondary: () => Navigator.pushNamed(context, RegisterScreen.routeName),
     children: [
       AuthField(

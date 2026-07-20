@@ -4,7 +4,9 @@ import '../data/catalog_repository.dart';
 import '../data/category.dart';
 import '../data/product.dart';
 
-final catalogRepositoryProvider = Provider((ref) => const CatalogRepository());
+final catalogRepositoryProvider = Provider<CatalogRepository>(
+  (ref) => const CatalogRepository(),
+);
 final productsProvider = Provider<List<Product>>(
   (ref) => ref.watch(catalogRepositoryProvider).allProducts,
 );

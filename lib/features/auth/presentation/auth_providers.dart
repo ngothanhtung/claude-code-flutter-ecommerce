@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/providers.dart';
 import '../data/auth_repository.dart';
 import '../data/user_model.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>(
-  (ref) => FirebaseAuthRepository(),
+  (ref) => ApiAuthRepository(ref.watch(apiClientProvider)),
 );
 final currentUserProvider = NotifierProvider<CurrentUserNotifier, UserModel?>(
   CurrentUserNotifier.new,
@@ -22,10 +23,6 @@ class CurrentUserNotifier extends Notifier<UserModel?> {
     state = await ref
         .read(authRepositoryProvider)
         .register(name: name, email: email, password: password);
-  }
-
-  Future<void> loginWithGoogle() async {
-    state = await ref.read(authRepositoryProvider).loginWithGoogle();
   }
 
   Future<void> logout() async {

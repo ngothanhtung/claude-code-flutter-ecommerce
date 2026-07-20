@@ -25,8 +25,24 @@ StoreOrder _order({String userId = 'user-1'}) => StoreOrder(
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('round-trips a Firestore order snapshot', () {
-    final restored = StoreOrder.tryFromJson(_order().toFirestore());
+  test('parses an API order response', () {
+    final restored = StoreOrder.tryFromJson({
+      'id': 'EV-100',
+      'user_id': 'user-1',
+      'items': [
+        {
+          'product_id': 'airflex-runner',
+          'name': 'AirFlex Runner',
+          'unit_price': 120,
+          'quantity': 2,
+        },
+      ],
+      'total': 240,
+      'created_at': '2026-07-19T00:00:00.000Z',
+      'status': 'processing',
+      'shipping_address': '1 Main Street',
+      'payment_method': 'cod',
+    });
     expect(restored?.id, 'EV-100');
     expect(restored?.userId, 'user-1');
     expect(restored?.items.single.name, 'AirFlex Runner');
@@ -54,10 +70,10 @@ void main() {
       final legacy = LegacyLocalOrderStore(
         LocalStore(await SharedPreferences.getInstance()),
       );
-      final restored = legacy.loadForUser('firebase-user').single;
-      expect(restored.userId, 'firebase-user');
+      final restored = legacy.loadForUser('legacy-user').single;
+      expect(restored.userId, 'legacy-user');
       await legacy.clear();
-      expect(legacy.loadForUser('firebase-user'), isEmpty);
+      expect(legacy.loadForUser('legacy-user'), isEmpty);
     },
   );
 }

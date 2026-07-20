@@ -1,11 +1,11 @@
 # Everyday Store
 
-An offline-first Flutter e-commerce demo built as a polished portfolio/tutorial app. It runs without a backend or network connection.
+A Flutter e-commerce client backed by the REST API in `../go-tutorials`.
 
 ## Features
 
-- Local registration, login, logout, and session restore
-- Searchable 24-product catalog with category and product detail screens
+- REST registration, login, logout, JWT refresh, and session restore
+- Products, categories, promos, orders, and reviews from the Go API
 - Persistent cart and wishlist
 - Simulated COD/demo-card checkout with persistent order history
 - Seeded and order-generated notifications with read state
@@ -14,14 +14,19 @@ An offline-first Flutter e-commerce demo built as a polished portfolio/tutorial 
 
 ## Run
 
+Start PostgreSQL, Redis, migrations, and the Go server from `../go-tutorials`, then:
+
 ```bash
 flutter pub get
-flutter run
+flutter run --dart-define=API_BASE_URL=http://localhost:8080
 ```
 
-Demo login: `admin@claude.ai` / `147258369`
+Android Emulator defaults to `http://10.0.2.2:8080`; iOS/macOS defaults to
+`http://localhost:8080`. Use `API_BASE_URL` for a physical device or deployed API.
 
-All data stays in `shared_preferences`. Credentials are stored in plaintext solely to demonstrate a local tutorial flow; this is not suitable for production authentication.
+Development login: `admin@go-tutorials.local` / `Admin@123456`
+
+JWT access/refresh tokens are stored in `shared_preferences`; use secure storage for a production release. Cart, wishlist, notification read state, and theme preferences remain local.
 
 ## Quality checks
 
